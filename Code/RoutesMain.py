@@ -125,7 +125,7 @@ class RoutesMain:
                 
                 planned_time=planned_date+hh_str+mm_str
                 route_info=Route(route,planned_time,geo0,geo1)
-                route_info.calculateRoute(index)
+                route_info.calculateRouteByNodes(index)
                 route24Hr.append(route_info);
                 index +=step
             
