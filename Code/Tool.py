@@ -2,6 +2,7 @@
 
 import time
 from datetime import *
+import math
  
 class Tool:
 
@@ -70,6 +71,18 @@ class Tool:
         
         return str
 
+    @staticmethod
+    def coords_to_distance(coords_a, coords_b):
+        lat_a = coords_a[0]
+        lon_a = coords_a[1]
+        lat_b = coords_b[0]
+        lon_b = coords_b[1]
+
+        c = math.sin(lat_a) * math.sin(lat_b) * math.cos(lon_a - lon_b) + math.cos(lat_a) * math.cos(lat_b)
+        distance = 6371.004 * math.acos(c)*math.pi/180
+
+        return distance
+        
 def main():
     
     time_str=Tool.getNextTime('201404092304', 1)
