@@ -150,9 +150,10 @@ def main():
 	coords = pixels_to_geocoordinates(pos,13)
 	print coords
 	
-	coords_a = [ 116.54774, 39.76751 ]
-	coords_b = [ 116.54774, 39.75751 ]
+	coords_a = [ 116.3580358, 39.9867797 ]
+	coords_b = [ 116.3586259, 39.9869299 ]
 	dis = coords_to_distance(coords_a,coords_b)
+	print 'Below result should be about: 0.052 KM'
 	print 'Disance:',coords_a, '-', coords_b, ':', dis , 'KM'
 			
 if __name__=='__main__':
