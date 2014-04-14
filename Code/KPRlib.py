@@ -334,12 +334,12 @@ class KaoPuTKUtl:
 
 		# latitude and logitude reverted below in order to work with old class
 		self.path_array = []
-		self.path_array.append((float(route_result[0].GEO0[1]),float(route_result[0].GEO0[0])))
-		for link in route_result[0].RouteLinks:
-			geo = link[3]
+		#self.path_array.append((float(route_result[0].GEO0[1]),float(route_result[0].GEO0[0])))
+		for link in route_result[0].Nodes:
+			geo = link
 			if geo != None:
 				self.path_array.append(( float(geo[1]),float(geo[0]) ))
-		self.path_array.append((float(route_result[0].GEO1[1]),float(route_result[0].GEO1[0])))
+		#self.path_array.append((float(route_result[0].GEO1[1]),float(route_result[0].GEO1[0])))
 		self.draw()
 '''
 	

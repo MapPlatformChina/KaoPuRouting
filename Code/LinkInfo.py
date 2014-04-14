@@ -14,6 +14,7 @@ class LinkInfo:
             self.loadLink2Lcd()
             
     def loadLink2Lcd(self):
+        pass
         '''
 		f=open(self.Path_Home+'/res/lcd_Link.txt','r')
         lineNo=0;
@@ -75,9 +76,13 @@ class LinkInfo:
                     break
                 else:
                     index +=1
-            
+            f.close()
+       
         else:
             print filepath+' is not found'
+        
+        
+        
         return speed
         
     
@@ -110,9 +115,12 @@ class LinkInfo:
                     break
                 else:
                     index +=1
-            
+            f.close()
         else:
             print filepath+' is not found'
+        
+        
+        
         return certainty
     
 #############################################################################   
