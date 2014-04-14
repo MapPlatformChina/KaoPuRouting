@@ -72,13 +72,17 @@ class RoutesMain:
                     pos=maneuver["position"]
                     geo=[pos["latitude"],pos["longitude"]]
                     links.append((link_id,link_length,link_instruction,geo))
-                 
+                
+                #only one leg
                 break
-       
+            
             routes.append([shape,links])
             
             Tool.debugStaticMessage(self.Debug,"\nlinks number is:\n "+str(len(links)))
             Tool.debugStaticMessage(self.Debug,"\nShape is:\n "+ str(shape))
+            
+            #only get one route
+            break
         
         Tool.debugStaticMessage(self.Debug,"route number is : "+ str(len(routes)))
             
@@ -92,7 +96,7 @@ class RoutesMain:
         
         for route in init_routes_info:
             route_info=Route(route,planned_time,geo0,geo1)
-            route_info.calculateRouteByNodes(0)
+            route_info.calculateRouteByNodes()
             routeOption.append(route_info)
         
             
