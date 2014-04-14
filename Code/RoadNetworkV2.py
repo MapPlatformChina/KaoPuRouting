@@ -13,7 +13,7 @@ import math
 direction_sign_dict = {'E': 1, 'W': 3, 'N': 2, 'S': 4}
 # geo should be in [latitude, longitude] format
 def get_direction_sign_with_geo(geo_a, geo_b):
-	diff = [geo_b[0] - geo_a[0], geo_b[1] - geo_b[1]]
+	diff = [geo_b[0] - geo_a[0], geo_b[1] - geo_a[1]]
 	direction_sign = '?'
 	if abs(diff[1]) >= abs(diff[0]):
 		if diff[1] >= 0:
