@@ -73,7 +73,7 @@ class RoutesMain:
                     geo=[pos["latitude"],pos["longitude"]]
                     links.append((link_id,link_length,link_instruction,geo))
                  
-                 break   
+                break   
        
             routes.append([shape,links])
             

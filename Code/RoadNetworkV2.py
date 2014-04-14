@@ -412,8 +412,8 @@ def sample_func_generate_link_dictionanry():
 		for seg in road.segs:
 			for link in seg.links:
 				count += sample_helper_write_link(link, file_handle)
-			for link in road.links:
-				count += sample_helper_write_link(link, file_handle)
+		for link in road.links:
+			count += sample_helper_write_link(link, file_handle)
 						
 	file_handle.close()
 	
@@ -500,7 +500,7 @@ def main():
 
 	# Here, your unit test code or main program
 	sample_func_generate_link_dictionanry()
-	#sample_generate_link_list()
+	# sample_generate_link_list()
 	
 if __name__=='__main__':
 	main()

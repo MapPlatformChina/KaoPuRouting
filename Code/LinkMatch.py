@@ -49,8 +49,10 @@ class LinkMatch:
 	# para of geo_a/b should be in the format of latitude/longitude
 	def match(self,geo_a, geo_b):
 		direction_sign = get_direction_sign_with_geo(geo_a, geo_b)
-		#geo = [(geo_a[0] + geo_b[0]) / 2, (geo_a[1] + geo_b[1]) / 2]
-		geo = geo_b
+		geo = [(geo_a[0] + geo_b[0]) / 2, (geo_a[1] + geo_b[1]) / 2]
+		#geo = geo_b
+		
+		#print direction_sign, geo_a, geo_b
 		
 		# PosCoordsUtl is longitude first
 		grid = geocoordinates_to_grid((geo[1],geo[0]), self.zoom_level_of_grids)
@@ -65,22 +67,25 @@ class LinkMatch:
 		while True:
 			grid_start = [grid_start[0] - 1, grid_start[1] - 1]
 			grid_end = [grid_end[0] + 1, grid_end[1] + 1]
-			for index_grid_0 in range(grid_start[0],grid_end[0] + 1):
-				for index_grid_1 in range(grid_start[1],grid_end[1] + 1):
-					key = ('%d_%d' % (index_grid_0,index_grid_1))
+			for index_grid_x in range(grid_start[0],grid_end[0] + 1):
+				for index_grid_y in range(grid_start[1],grid_end[1] + 1):
+					key = ('%d_%d' % (index_grid_x,index_grid_y))
 					if not self.link_match_table.has_key(key):
 						continue
 					lat = self.link_match_table[key][1]
 					lon = self.link_match_table[key][2]
 					# calculate distance with latitude zoomed
 					dis = ((geo[0] - lat)*2) **2 + (geo[1] - lon)**2 
+					#print key, self.link_match_table[key], dis
 					if direction_sign == self.link_match_table[key][0] and dis < min_dis:
 						link_matched[0] = self.link_match_table[key][3]
 						link_matched[1] = str(self.link_match_table[key][4])
 						min_dis = dis
 			if min_dis < MAX_DIS:
+				#print link_matched, level_of_out_search, min_dis
 				return link_matched
 			if level_of_out_search > MAX_LEVEL_OF_OUT_SEARCH:
+				#print link_match, level_of_out_search, min_dis
 				return link_matched
 			level_of_out_search += 1
 
@@ -93,6 +98,8 @@ def main():
 	geo_a = [39.9891078,116.434865]
 	geo_b = [39.9891078,116.4373326]
 
+	geo_a = [39.9515592744,116.41934259]
+	geo_b = [39.9505592744,116.41934259]
 
 	print 'from:',geo_a,'to:', geo_b
 	lm = LinkMatch()
