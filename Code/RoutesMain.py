@@ -64,7 +64,7 @@ class RoutesMain:
 
                     link_action=maneuver["action"]
                     if link_action == "arrive":
-                        break;
+                        break
 
                     link_length=str(maneuver["length"])
                     link_id=str(maneuver["toLink"])
@@ -73,7 +73,7 @@ class RoutesMain:
                     geo=[pos["latitude"],pos["longitude"]]
                     links.append((link_id,link_length,link_instruction,geo))
                  
-                 break;   
+                 break   
        
             routes.append([shape,links])
             
