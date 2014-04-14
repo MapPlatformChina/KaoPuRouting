@@ -73,7 +73,7 @@ class RoutesMain:
                     geo=[pos["latitude"],pos["longitude"]]
                     links.append((link_id,link_length,link_instruction,geo))
                  
-                 break   
+                break
        
             routes.append([shape,links])
             
@@ -92,7 +92,7 @@ class RoutesMain:
         
         for route in init_routes_info:
             route_info=Route(route,planned_time,geo0,geo1)
-            route_info.calculateRoute()
+            route_info.calculateRouteByNodes(0)
             routeOption.append(route_info)
         
             
@@ -107,7 +107,7 @@ class RoutesMain:
 
         for route in init_routes_info:
             index=0
-            total= 24*60
+            total= 1*60
             step =5
             while index < total:
                 mm=index%60
@@ -269,6 +269,7 @@ class RoutesMain:
         
         #"latitude":39.8909098,"longitude":116.4616548
         #"latitude":39.9453306,"longitude":116.4166836
+  
         start_geoX="39.9515592744"
         start_geoY="116.41934259"
         end_geoX="39.9992530"
@@ -277,6 +278,7 @@ class RoutesMain:
         
         routes=self.get24HrRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_date)
         
+        print '***********************************************************'
         separator_str='|'
         for route in routes:
             output_str=route.PlannedTime +separator_str
@@ -301,10 +303,10 @@ class RoutesMain:
         
     def testGetRoutes(self):
     
-        start_geoX="39.8909098"
-        start_geoY="116.4616548"
-        end_geoX="39.9453306"
-        end_geoY="116.4166836"
+        start_geoX="39.9515592744"
+        start_geoY="116.41934259"
+        end_geoX="39.9992530"
+        end_geoY="116.4744977"
         planned_time="201404090000"
         
         self.getRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_time)
@@ -319,7 +321,15 @@ class RoutesMain:
         start_geoY="116.433120"
         end_geoX="39.871680"
         end_geoY="116.439420"
-        print self.listRoutes([start_geoX,start_geoY],[end_geoX,end_geoY])
+        
+        start_geoX="39.9515592744"
+        start_geoY="116.41934259"
+        end_geoX="39.9992530"
+        end_geoY="116.4744977"
+        
+        routes=self.listRoutes([start_geoX,start_geoY],[end_geoX,end_geoY])
+        
+        Tool.results2Log(str(routes[0]))
         
         
 ###############################################################
@@ -355,11 +365,11 @@ def main():
     
     #my_route.testGetRoutes()
     
-    #my_route.testGet24HrRoutes()
+    my_route.testGet24HrRoutes()
 
     #my_route.testPos2Link(sys.argv[1])
     
-    my_route.testListRoutes()
+    #my_route.testListRoutes()
     
 
 

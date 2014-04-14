@@ -75,9 +75,12 @@ class LinkInfo:
                     break
                 else:
                     index +=1
-            
+            f.close()
         else:
             print filepath+' is not found'
+        
+        
+        
         return speed
         
     
@@ -110,9 +113,12 @@ class LinkInfo:
                     break
                 else:
                     index +=1
-            
+            f.close()
         else:
             print filepath+' is not found'
+        
+        
+        
         return certainty
     
 #############################################################################   
