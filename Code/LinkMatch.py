@@ -11,7 +11,7 @@ import math
 from RoadNetworkV2 import *
 from PosCoordsUtl import *
 
-MAX_DIS = 10**2 + 10**2
+MAX_DIS = 100**2 + 100**2
 
 class LinkMatch:
 
@@ -59,12 +59,15 @@ class LinkMatch:
 		grid_end = grid
 		min_dis = MAX_DIS
 		link_matched = ['?','?']
+		
+		MAX_LEVEL_OF_OUT_SEARCH = 5
+		level_of_out_search = 0
 		while True:
 			grid_start = [grid_start[0] - 1, grid_start[1] - 1]
 			grid_end = [grid_end[0] + 1, grid_end[1] + 1]
-			for index_lat in range(grid_start[0],grid_end[0] + 1):
-				for index_lon in range(grid_start[1],grid_end[1] + 1):
-					key = ('%d_%d' % (index_lat,index_lon))
+			for index_grid_0 in range(grid_start[0],grid_end[0] + 1):
+				for index_grid_1 in range(grid_start[1],grid_end[1] + 1):
+					key = ('%d_%d' % (index_grid_0,index_grid_1))
 					if not self.link_match_table.has_key(key):
 						continue
 					lat = self.link_match_table[key][1]
@@ -77,12 +80,20 @@ class LinkMatch:
 						min_dis = dis
 			if min_dis < MAX_DIS:
 				return link_matched
+			if level_of_out_search > MAX_LEVEL_OF_OUT_SEARCH:
+				return link_matched
+			level_of_out_search += 1
 
 def main():
 
 	# Here, your unit test code or main program
 	geo_a = [39.9515592744,116.41934259]
 	geo_b = [39.9527, 116.4287]
+
+	geo_a = [39.9891078,116.434865]
+	geo_b = [39.9891078,116.4373326]
+
+
 	print 'from:',geo_a,'to:', geo_b
 	lm = LinkMatch()
 	
