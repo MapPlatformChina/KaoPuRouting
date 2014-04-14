@@ -23,19 +23,18 @@ class Route:
     #start point and end point
     GEO0=[]
     GEO1=[]
-    Shape=''
     Nodes=[]
     MaxCertainty=5
     
     #route[[shape,links], [...], ...]
     def __init__(self, route, time, geo0,geo1):
         
-        self.Shape=route[0]
+        shape=route[0]
         self.RouteLinks=route[1]
         self.PlannedTime=time
         self.GEO0=geo0
         self.GEO1=geo1
-        self.initRouteSections(self.Shape)
+        self.initRouteSections(shape)
   
     def getDefaultSpeed(self, time_str):
         hh=int(time_str[8:10])
@@ -137,7 +136,7 @@ class Route:
             index +=1
             self.Nodes.append([geox,geoy])
     
-    def calculateRouteByNodes(self, round_of_cal=0):
+    def calculateRouteByNodes(self):
         traveltime=0.00
         certainty=0.00
         linkNo=0
@@ -158,15 +157,12 @@ class Route:
             geo_log=float(self.Nodes[index][1])
             geo_next=(geo_lat,geo_log)
             
-            #lcd_direction = link_match_obj.match(geo_start,geo_next)
-            lcd_direction=['4595','1']
+            lcd_direction = link_match_obj.match(geo_start,geo_next)
+
             
             link_length=Tool.coords_to_distance(geo_start,geo_next)
             
-            if round_of_cal == 0:
-                print geo_next, geo_start, link_length, 'matched to:', lcd_direction
-
-            
+          
             nexttime=Tool.getNextTime(starttime, int(traveltime))
             link_speed=self.getLinkSpeed(lcd_direction,nexttime)
             link_certainty=self.getLinkCertainty(lcd_direction,nexttime)

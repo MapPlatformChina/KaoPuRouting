@@ -107,7 +107,7 @@ class RoutesMain:
 
         for route in init_routes_info:
             index=0
-            total= 1*60
+            total= 24*60
             step =5
             while index < total:
                 mm=index%60
@@ -125,7 +125,7 @@ class RoutesMain:
                 
                 planned_time=planned_date+hh_str+mm_str
                 route_info=Route(route,planned_time,geo0,geo1)
-                route_info.calculateRouteByNodes(index)
+                route_info.calculateRouteByNodes()
                 route24Hr.append(route_info);
                 index +=step
             

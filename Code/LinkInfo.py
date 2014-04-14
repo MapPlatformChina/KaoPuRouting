@@ -14,6 +14,7 @@ class LinkInfo:
             self.loadLink2Lcd()
             
     def loadLink2Lcd(self):
+        pass
         '''
 		f=open(self.Path_Home+'/res/lcd_Link.txt','r')
         lineNo=0;
@@ -76,6 +77,7 @@ class LinkInfo:
                 else:
                     index +=1
             f.close()
+       
         else:
             print filepath+' is not found'
         
