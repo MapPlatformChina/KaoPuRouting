@@ -125,7 +125,7 @@ class Route:
         
     def initRouteSections(self,shape):
         
-        sections=shape.split(',')
+        sections=shape
         index=0
         end=len(sections)
         while index < end:
