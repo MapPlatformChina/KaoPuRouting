@@ -56,6 +56,7 @@ class Tool:
         #
         #time_str yyyymmddHHMM
         date=datetime.strptime(time_str,'%Y%m%d%H%M')
+
         mins=int(mins)
         span=timedelta(minutes=mins)
         date2= date+span
@@ -79,7 +80,7 @@ class Tool:
         lon_b = coords_b[1]
 
         c = math.sin(lat_a) * math.sin(lat_b) * math.cos(lon_a - lon_b) + math.cos(lat_a) * math.cos(lat_b)
-        distance = 6371.004 * math.acos(c)*math.pi/180
+        distance = 1000*6371.004 * math.acos(c)*math.pi/180
 
         return distance
         
