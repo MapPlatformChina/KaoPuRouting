@@ -425,7 +425,7 @@ def sample_generate_link_list():
 	road_dict = RoadNetworkDict()
 	print road_dict.road_network.get_size(),'roads loaded'
 	
-	is_shifted = True
+	is_shifted = False
 	
 	if is_shifted:
 		output_filename = "LinkListShifted.txt"
@@ -465,15 +465,15 @@ def sample_generate_link_list():
 				outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
 									(road.LCD, link.point_a.link_name,
 									link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
-									link.point_a.latitude+shift[1], link.point_a.longitude+shift[0],
-									link.point_b.latitude+shift[1], link.point_b.longitude+shift[0],
+									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
+									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
 									link.point_a.seg_lcd, link.point_b.seg_lcd) )
 
 				outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
 									(road.LCD, link.point_a.link_name,
 									link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
-									link.point_a.latitude+shift[1], link.point_a.longitude+shift[0],
-									link.point_b.latitude+shift[1], link.point_b.longitude+shift[0],
+									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
+									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
 									link.point_a.seg_lcd, link.point_b.seg_lcd) )
 				#print outputstr
 				file_handle.write(outputstr)
@@ -484,8 +484,8 @@ def sample_generate_link_list():
 			outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
 							(road.LCD, link.point_a.link_name,
 							link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
-							link.point_a.latitude+shift[1], link.point_a.longitude+shift[0],
-							link.point_b.latitude+shift[1], link.point_b.longitude+shift[0],
+							link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
+							link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
 							link.point_a.seg_lcd, link.point_b.seg_lcd) )
 			#print outputstr
 			file_handle.write(outputstr)
