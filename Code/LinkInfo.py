@@ -48,7 +48,7 @@ class LinkInfo:
         
     def findLinkSpeed(self, lcd_direction,time_str):
         speed=-1
-        filepath=self.Path_Home+'res/Pattern/'+lcd_direction[0]+'_'+lcd_direction[1]+'.pattern'
+        filepath=self.Path_Home+'res/Pattern/'+str(lcd_direction[0])+'_'+str(lcd_direction[1])+'.pattern'
         
         day_index=int(Tool.getDayofWeek(time_str))
         time_index=int(Tool.getTimeIndex(time_str))
@@ -63,7 +63,7 @@ class LinkInfo:
             index=0;
             f=open(filepath,'r')
             while True:
-                line=f.readline();
+                line=f.readline()
                 if not line: 
                     print "not find correctly at end of the file"
                     break
@@ -89,7 +89,7 @@ class LinkInfo:
     def findLinkCertainty(self,lcd_direction,time_str):
         
         certainty=-1
-        filepath=self.Path_Home+'res/CertaintyIndex/'+lcd_direction[0]+'_'+lcd_direction[1]+'.ci'
+        filepath=self.Path_Home+'res/CertaintyIndex/'+str(lcd_direction[0])+'_'+str(lcd_direction[1])+'.ci'
         
         day_index=Tool.getDayofWeek(time_str)
         day_index -=1
@@ -102,7 +102,7 @@ class LinkInfo:
             index=0;
             f=open(filepath,'r')
             while True:
-                line=f.readline();
+                line=f.readline()
                 if not line: 
                     print "not find correctly at end of the file"
                     break
@@ -122,7 +122,59 @@ class LinkInfo:
         
         
         return certainty
+
+
+    def load7DaysLinkSpeed(self, lcd_direction):
     
+        filepath=self.Path_Home+'res/Pattern/'+lcd_direction+'.pattern'
+        
+        speed=[]
+        if os.path.exists(filepath):
+            index=0;
+            f=open(filepath,'r')
+            while True:
+                line=f.readline()
+                if not line: 
+                    print "not find correctly at end of the file"
+                    break
+                
+                line=line.strip()
+                speed.append((line))
+                
+                index +=1
+            f.close()
+       
+        else:
+            print filepath+' is not found'
+
+        return speed
+        
+    
+    def Load7DaysLinkCertainty(self,lcd_direction):
+        
+        filepath=self.Path_Home+'res/CertaintyIndex/'+lcd_direction+'.ci'
+
+        certainty=[]
+        if os.path.exists(filepath):
+            index=0;
+            f=open(filepath,'r')
+            while True:
+                line=f.readline()
+                if not line: 
+                    print "not find correctly at end of the file"
+                    break
+                line=line.strip()
+                certainty.append((line))
+                
+                index +=1
+            f.close()
+        else:
+            print filepath+' is not found'
+        
+        
+        
+        return certainty
+        
 #############################################################################   
     def testFindLinkCertainty(self):
         print self.findLinkCertainty(['5','0'],'201404092359')
