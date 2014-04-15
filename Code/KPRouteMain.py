@@ -3,7 +3,7 @@
 import sys
 import json
 import httplib
-from Route import *
+from RouteOneDay import *
 from Tool import *
 import urllib 
 import urllib2
@@ -103,24 +103,12 @@ class KPRouteMain:
         print '***********************************************************'
         separator_str='|'
         for route in routes:
-            output_str=route.PlannedTime +separator_str
-            output_str +=str(route.TraveledTime) + separator_str
-            output_str +=str(route.RouteCertainty) + separator_str
-            output_str +=str(route.GEO0) + separator_str
-            output_str +=str(route.GEO1)
-            output_str +='\nLinks Info:'
-            output_str +=str(len(route.RouteLinks)) +' links \n'
+            output_str=route.PlannedTime +'\n' 
+            for onetime in route.TraveledTime:
+                output_str +=str(onetime.TraveledTime) + separator_str
+                output_str +=str(onetime.RouteCertainty) + '\n' 
+
             Tool.results2Log(output_str)
-            
-            
-            output_str=''            
-            for link in route.RouteLinks:
-                output_str +=link[2]+ separator_str
-                output_str += str(link[3])
-                output_str +='\n'
-                
-            Tool.results2Log(output_str)
-            Tool.results2Log('\n')
 
         
     def testListRoutes(self):
