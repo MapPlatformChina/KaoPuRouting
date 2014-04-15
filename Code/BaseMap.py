@@ -157,9 +157,9 @@ class BaseMap:
 	def move_center(self, movement):
 		pos = self.pos_coords_utl.coords_to_pos(self.center_coords)
 		new_pos = [pos[0] - movement[0], pos[1] - movement[1]]
-		print pos, new_pos, self.center_coords,
+		#print pos, new_pos, self.center_coords,
 		self.set_center(self.pos_coords_utl.pos_to_coords(new_pos))
-		print self.center_coords
+		#print self.center_coords
 		# self.cache_tile()
 		return self.center_coords
 
@@ -206,8 +206,9 @@ class BaseMap:
 			self.selected_spot[0] = [event.x,event.y]
 			self.selected_spot[1] = self.get_coords(self.selected_spot[0])
 		else:
-			pass
-		#self.draw()
+			movement = [event.x - self.pos_of_move_from[0], event.y - self.pos_of_move_from[1]]
+			self.move_center(movement)
+			self.pos_of_move_from = [event.x,event.y]
 		
 	def handler_button1_released(self,event):
 		if self.selected_spot != None:
@@ -218,7 +219,6 @@ class BaseMap:
 			self.move_center(movement)
 		
 		self.selected_spot = None
-		#self.draw()
 		
 		
 # Below is for helper functions

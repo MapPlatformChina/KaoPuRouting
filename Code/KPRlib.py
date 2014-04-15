@@ -5,6 +5,7 @@
 # This file is a lib file for Kao Pu Routing program 
 # Created in 2014
 # ######################################################################
+import sys
 from Tkinter import *
 import tkFileDialog
 from BaseMap import *
@@ -77,15 +78,11 @@ class KaoPuTKUtl:
 		
 		self.path_array = []
 		
-		print 'Initiate map view ...',
 		self.basemap = BaseMap(MAP_AREA_SIZE,256, [self.center_longitude,self.center_latitude])
 		self.basemap.add_spot((self.from_longitude, self.from_latitude), 10, '始')
 		self.basemap.add_spot((self.to_longitude, self.to_latitude), 10, '终')
-		print 'done!'
 		
-		print 'Initiate RouteMain ...',
 		self.route_obj = KPRouteMain()
-		print 'done!'
 
 		
 							
@@ -361,10 +358,14 @@ class KaoPuTKUtl:
 # unit test code
 
 def main():
+	print 'Initiate TK windows/framework and commponents ...',
+	sys.stdout.flush()
 	root_widget = Tk()
 	inst = KaoPuTKUtl(root_widget)
 	inst.construct_layout()
 	inst.draw()
+	print 'done!\nStart to take events ...'
+	sys.stdout.flush()
 	root_widget.mainloop()
 
 			

@@ -25,6 +25,8 @@ class LinkMatch:
 		self.load()
 	
 	def load(self):
+		print 'Start to load matching table...',
+		sys.stdout.flush()
 		file_name = '../Res/LinkMatch.dict'
 		
 		file_stream = open(file_name,'r')
@@ -46,7 +48,8 @@ class LinkMatch:
 			self.link_match_table[key].append([direction_sign, [longitude,latitude], LCD, direction])
 			
 		file_stream.close()
-		
+		print 'Done!'
+		sys.stdout.flush()
 		
 		
 	# para of geo_a/b should be in the format of longitude/latitude
