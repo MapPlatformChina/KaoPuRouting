@@ -168,7 +168,7 @@ class RouteOneDay:
             index +=step
             
             print planned_time
-            break
+            
             
 
     def calculateRouteOneTime(self,planned_time):
