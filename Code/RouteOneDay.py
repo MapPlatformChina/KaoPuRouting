@@ -167,7 +167,7 @@ class RouteOneDay:
             
             index +=step
             
-            print planned_time
+            print "-"+planned_time+"\r",
             
             
 
