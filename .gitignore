@@ -1,0 +1,5 @@
+*.pyc
+*.list
+*.dict
+Res/*
+app.log

@@ -8,7 +8,7 @@
 from Tkinter import *
 import tkFileDialog
 from BaseMap import *
-from RoutesMain import *
+from KPRouteMain import *
 from KaoPuBaseChart import *
 
 WINDOWS_SIZE = (1024,768)
@@ -46,6 +46,12 @@ CI_TEXT = '准点到达风险'
 
 CB_ARRIVAL_TEXT = "依据到达时间"
 
+RISK_TEXT_5 = '超大风险'
+RISK_TEXT_4 = '较大风险'
+RISK_TEXT_3 = '有些风险'
+RISK_TEXT_2 = '微小风险'
+RISK_TEXT_1 = '无风险'
+
 PAD_X = 2
 PAD_Y = 2
 
@@ -71,11 +77,15 @@ class KaoPuTKUtl:
 		
 		self.path_array = []
 		
+		print 'Initiate map view ...',
 		self.basemap = BaseMap(MAP_AREA_SIZE,256, [self.center_longitude,self.center_latitude])
 		self.basemap.add_spot((self.from_longitude, self.from_latitude), 10, '始')
 		self.basemap.add_spot((self.to_longitude, self.to_latitude), 10, '终')
+		print 'done!'
 		
-		self.route_obj = RoutesMain()
+		print 'Initiate RouteMain ...',
+		self.route_obj = KPRouteMain()
+		print 'done!'
 
 		
 							
@@ -302,15 +312,15 @@ class KaoPuTKUtl:
 			self.estimated_time_input.insert(0,str(et_value))
 			
 			if ci_value >=90:
-				ci_msg = '无风险'
+				ci_msg = RISK_TEXT_1
 			elif ci_value >=80:
-				ci_msg = '微小风险'
+				ci_msg = RISK_TEXT_2
 			elif ci_value >=70:
-				ci_msg = '有些风险'
+				ci_msg = RISK_TEXT_3
 			elif ci_value >=60:
-				ci_msg = '较大风险'
+				ci_msg = RISK_TEXT_4
 			else:
-				ci_msg = '超大风险'
+				ci_msg = RISK_TEXT_5
 			self.ci_result_input.delete(0,END)
 			self.ci_result_input.insert(0,ci_msg)
 		self.draw()
@@ -320,20 +330,20 @@ class KaoPuTKUtl:
 		print 'predicting your route in:', self.date_to_predict
 		route_result = self.route_obj.get24HrRoutes([str(self.from_latitude),str(self.from_longitude)],
 								[str(self.to_latitude), str(self.to_longitude)], self.date_to_predict)
-		self.estimated_time_array = []
-		self.ci_array = []
-		for route_obj in route_result:
-			self.estimated_time_array.append(route_obj.TraveledTime)
-			self.ci_array.append( route_obj.RouteCertainty * 100)
+		self.estimated_time_array = route_result.TraveledTime
+		self.ci_array = route_result.RouteCertainty
+		for i in range(0,len(self.ci_array)):
+			self.ci_array[i] *= 100
+		#for i in range(0,len(self.estimated_time_array)):
+		#	self.estimated_time_array[i] *= 100
 
 		# latitude and logitude reverted below in order to work with old class
 		self.path_array = []
 		#self.path_array.append((float(route_result[0].GEO0[1]),float(route_result[0].GEO0[0])))
-		for link in route_result[0].Nodes:
+		for link in route_result.Nodes:
 			geo = link
 			if geo != None:
 				self.path_array.append(( float(geo[1]),float(geo[0]) ))
-		#self.path_array.append((float(route_result[0].GEO1[1]),float(route_result[0].GEO1[0])))
 		self.draw()
 '''
 	
