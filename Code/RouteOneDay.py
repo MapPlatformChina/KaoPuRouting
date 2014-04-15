@@ -7,7 +7,7 @@ import math
 
 link_match_obj = LinkMatch()    
 
-class Route:
+class RouteOneDay:
 
     ##
     # RouteLInks[(linkID,length,instruction,[lat,long]),(),...]
