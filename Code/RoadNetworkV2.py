@@ -11,17 +11,17 @@ from CSVData import *
 import math
 
 direction_sign_dict = {'E': 1, 'W': 3, 'N': 2, 'S': 4}
-# geo should be in [latitude, longitude] format
+# geo should be in [longitude,latitude] format
 def get_direction_sign_with_geo(geo_a, geo_b):
 	diff = [geo_b[0] - geo_a[0], geo_b[1] - geo_a[1]]
 	direction_sign = '?'
-	if abs(diff[1]) >= abs(diff[0]):
-		if diff[1] >= 0:
+	if abs(diff[0]) >= abs(diff[1]):
+		if diff[0] >= 0:
 			direction_sign = 'E'	#EAST
 		else:
 			direction_sign = 'W'	#WEST
 	else:
-		if diff[0] >= 0:
+		if diff[1] >= 0:
 			direction_sign = 'N'	#NORTH
 		else:
 			direction_sign = 'S'	#SOUTH
@@ -142,8 +142,8 @@ class Link:
 					self.direction]
 	
 	def get_direction_sign(self):
-		return get_direction_sign_with_geo((self.point_a.latitude, self.point_a.longitude),
-									(self.point_b.latitude, self.point_b.longitude))
+		return get_direction_sign_with_geo((self.point_a.longitude, self.point_a.latitude),
+									(self.point_b.longitude, self.point_b.latitude))
 
 class Point:
 	def __init__(self, LCD, longitude, latitude, seg_lcd=None,road_lcd =None, link_name =None):
@@ -373,9 +373,9 @@ def sample_helper_break_link_into_dict(link):
 	GRANULARITY = 0.00001
 	link_name = ('%s_%d' % (link.point_b.LCD, link.direction))
 	dict_array = []
-	zero_point = [link.point_a.latitude,link.point_a.longitude]
-	diff = [link.point_b.latitude - link.point_a.latitude, 
-				link.point_b.longitude - link.point_a.longitude]
+	zero_point = [link.point_a.longitude,link.point_a.latitude]
+	diff = [link.point_b.longitude - link.point_a.longitude,
+				link.point_b.latitude - link.point_a.latitude]
 
 	num_segment = int(math.ceil(max(abs(diff[0]),abs(diff[1])) / 0.0001))
 	seg_diff = [diff[0] / float(num_segment), diff[1] / float(num_segment)]
@@ -420,6 +420,7 @@ def sample_func_generate_link_dictionanry():
 	print 'Link dictionary is writen into ', output_filename
 	print count, 'links are written!\nFeel free to check out\n'
 
+# file output of this function is still in latitude/longitude format
 def sample_generate_link_list():
 	road_dict = RoadNetworkDict()
 	print road_dict.road_network.get_size(),'roads loaded'
