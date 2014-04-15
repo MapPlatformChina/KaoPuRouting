@@ -48,9 +48,21 @@ class KPRouteMain:
             for leg in one_route["leg"]:
             
                 shape=leg['shape']
-                break
+                for maneuver in leg["maneuver"]:
+
+                    link_action=maneuver["action"]
+                    if link_action == "arrive":
+                        break
+
+                    link_length=str(maneuver["length"])
+                    link_id=str(maneuver["toLink"])
+                    link_instruction=(maneuver["instruction"]).encode('utf-8')
+                    pos=maneuver["position"]
+                    links.append((link_id,link_length,link_instruction))
+                
+                #only one leg
             
-            routes.append(shape)
+            routes.append((shape,links))
             
             Tool.debugStaticMessage(self.Debug,"\nShape is:\n "+ str(shape))
             
@@ -63,40 +75,14 @@ class KPRouteMain:
     #planned_date= yyyymmdd
     #return Route list object
     def get24HrRoutes(self,geo0,geo1,planned_date):
-        
-        route24Hr=[]
-        init_routes_info=self.listRoutes(geo0,geo1)
 
-        for route in init_routes_info:
-            
-            index=0
-            total= 24*60
-            step =5
-            while index < total:
-                mm=index%60
-                hh=index/60
-                
-                if mm<10:
-                    mm_str='0'+str(mm)
-                else:
-                    mm_str=str(mm)
-                
-                if hh<10:
-                    hh_str='0'+str(hh)
-                else:
-                    hh_str=str(hh)
-                
-                planned_time=planned_date+hh_str+mm_str
-                route_info=RouteOneDay(route,planned_time,geo0,geo1)
-                route_info.calculateRouteByNodes()
-                route24Hr.append(route_info);
-                index +=step
-            
-            # ******   Attention ********
-            # only select the first route
-            break
+        routes_info=self.listRoutes(geo0,geo1)
         
-        return route24Hr
+        for route in routes_info:
+            route_result=RouteOneDay(route,geo0,geo1,planned_date)
+            route_result.calculateRouteByNodes();
+            break
+        return route_result
     
 
 #########################################################
@@ -135,21 +121,7 @@ class KPRouteMain:
                 
             Tool.results2Log(output_str)
             Tool.results2Log('\n')
-        
-        
-    def testGetRoutes(self):
-    
-        start_geoX="39.9515592744"
-        start_geoY="116.41934259"
-        end_geoX="39.9992530"
-        end_geoY="116.4744977"
-        planned_time="201404090000"
-        
-        self.getRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_time)
-    
-    def testPos2Link(self, filename):
-        
-        self.pos2Link(filename)
+
         
     def testListRoutes(self):
     
