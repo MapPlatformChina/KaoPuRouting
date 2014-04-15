@@ -155,7 +155,7 @@ class RouteOneDay:
             
             index +=step
             
-            Tool.results2Log(planned_time+"\n") 
+            print planned_time
             
 
     def calculateRouteOneTime(self,planned_time):
@@ -184,7 +184,6 @@ class RouteOneDay:
         certainty=float(certainty/(self.MaxCertainty*linkNo))
         self.RouteCertainty.append(round(certainty,2))
 
-        Tool.results2Log(str(self.PlannedTime))
 
         
     def testCalculateRouteByNodes(self):

@@ -98,16 +98,16 @@ class KPRouteMain:
         end_geoY="116.4744977"
         planned_date="20140705"
         
-        routes=self.get24HrRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_date)
+        route=self.get24HrRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_date)
         
         print '***********************************************************'
         separator_str='|'
-        for route in routes:
-            output_str=route.PlannedTime +'\n' 
-            for onetime in route.TraveledTime:
-                output_str +=str(onetime.TraveledTime) + separator_str
-                output_str +=str(onetime.RouteCertainty) + '\n' 
-
+        output_str=route.PlannedTime +'\n' 
+        index =0
+        while index < len(route.TraveledTime):
+            output_str +=str(route.TraveledTime[index]) + separator_str
+            output_str +=str(route.RouteCertainty[index]) + '\n' 
+            index +=1
             Tool.results2Log(output_str)
 
         
