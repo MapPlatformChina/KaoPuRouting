@@ -111,7 +111,7 @@ class RouteOneDay:
     def getLinkSpeed(self, lcd_direction, time_str):     
         speed_24=self.SpeedWeek.get(lcd_direction)
 
-        if speed_24 == None:
+        if speed_24 == None or not speed_24 :
             return self.getDefaultSpeed(time_str)
         else:
             line=self.SpeedWeek.get(lcd_direction)
@@ -126,7 +126,7 @@ class RouteOneDay:
     def getLinkCertainty(self, lcd_direction, time_str):
         certainty_24=self.CertaintyWeek.get(lcd_direction)
         
-        if certainty_24 == None:
+        if certainty_24 == None or not certainty_24 :
             return self.getDefaultCertainty(time_str)
             
         else:
@@ -191,9 +191,6 @@ class RouteOneDay:
             traveltime=cost+traveltime
             certainty=certainty+link_certainty
             linkNo =linkNo+1
-            
-            #print traveltime
-            #print ' ------------------ '
             
         self.TraveledTime.append(math.ceil(traveltime))
         certainty=float(certainty/(self.MaxCertainty*linkNo))
