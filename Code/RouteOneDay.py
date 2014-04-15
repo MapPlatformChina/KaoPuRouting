@@ -158,9 +158,11 @@ class RouteOneDay:
             print planned_time
             
 
-    def calculateRouteOneTime(self,planned_time):    
+    def calculateRouteOneTime(self,planned_time):
+    
         traveltime=0
         certainty=0.00
+        linkNo=0
 
         for node in self.NodePath:
         
@@ -175,7 +177,8 @@ class RouteOneDay:
             
             traveltime=cost+traveltime
             certainty=certainty+link_certainty
-
+            linkNo =linkNo+1
+            
             
         self.TraveledTime.append(math.ceil(traveltime))
         certainty=float(certainty/(self.MaxCertainty*linkNo))
