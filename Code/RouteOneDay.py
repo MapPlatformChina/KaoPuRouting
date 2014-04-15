@@ -31,21 +31,23 @@ class RouteOneDay:
 
     def __init__(self, route,geo0,geo1, time):
         
-        NodePath=[]
-    
-        TraveledTime=[]
-        RouteCertainty=[]
-        GEO0=[]
-        GEO1=[]
-        Nodes=[]
-        SpeedWeek={}
-        CertaintyWeek={}
-        LinksInstruction={}
+        self.NodePath=[]
+        self.TraveledTime=[]
+        self.RouteCertainty=[]
+        self.GEO0=[]
+        self.GEO1=[]
+        self.Nodes=[]
+        self.SpeedWeek={}
+        self.CertaintyWeek={}
+        self.LinksInstruction={}
+        
         self.PlannedTime=time
         self.GEO0=geo0
         self.GEO1=geo1
         self.LinksInstruction=route[1]
         self.initRouteSections(route[0])
+        
+        print '--------------Initiate New Route --------------------'
         
     def initRouteSections(self,shape):
         
@@ -136,7 +138,7 @@ class RouteOneDay:
             pos=line.split(' ')
             return float(pos[time_index])
         
-
+    
     
     def calculateRouteByNodes(self):
         self.TraveledTime=[]
@@ -166,6 +168,7 @@ class RouteOneDay:
             index +=step
             
             print planned_time
+            break
             
 
     def calculateRouteOneTime(self,planned_time):
@@ -189,6 +192,8 @@ class RouteOneDay:
             certainty=certainty+link_certainty
             linkNo =linkNo+1
             
+            #print traveltime
+            #print ' ------------------ '
             
         self.TraveledTime.append(math.ceil(traveltime))
         certainty=float(certainty/(self.MaxCertainty*linkNo))
