@@ -158,11 +158,9 @@ class RouteOneDay:
             print planned_time
             
 
-    def calculateRouteOneTime(self,planned_time):
-    
+    def calculateRouteOneTime(self,planned_time):    
         traveltime=0
         certainty=0.00
-        linkNo=0
 
         for node in self.NodePath:
         
@@ -173,12 +171,11 @@ class RouteOneDay:
             link_speed=self.getLinkSpeed(lcd_direction,nexttime)
             link_certainty=self.getLinkCertainty(lcd_direction,nexttime)
             
-            cost=float(link_length*60)/(link_speed*1000)
+            cost=(link_length*60)/int(link_speed*1000)
             
-            traveltime =cost+traveltime
-            certainty =certainty+link_certainty
-            linkNo =linkNo+1
-            
+            traveltime=cost+traveltime
+            certainty=certainty+link_certainty
+
             
         self.TraveledTime.append(math.ceil(traveltime))
         certainty=float(certainty/(self.MaxCertainty*linkNo))
