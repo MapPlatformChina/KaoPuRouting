@@ -345,6 +345,9 @@ class KaoPuTKUtl:
 			if geo != None:
 				self.path_array.append(( float(geo[1]),float(geo[0]) ))
 		self.draw()
+		print 'num of nodes:', len(route_result.Nodes)
+		print 'num of certainty index:',len(route_result.RouteCertainty)
+		print 'num of estimated time:',len(route_result.TraveledTime)
 '''
 	
 # sample url
