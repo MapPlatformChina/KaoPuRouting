@@ -31,6 +31,16 @@ class RouteOneDay:
 
     def __init__(self, route,geo0,geo1, time):
         
+        NodePath=[]
+    
+        TraveledTime=[]
+        RouteCertainty=[]
+        GEO0=[]
+        GEO1=[]
+        Nodes=[]
+        SpeedWeek={}
+        CertaintyWeek={}
+        LinksInstruction={}
         self.PlannedTime=time
         self.GEO0=geo0
         self.GEO1=geo1
@@ -173,7 +183,7 @@ class RouteOneDay:
             link_speed=self.getLinkSpeed(lcd_direction,nexttime)
             link_certainty=self.getLinkCertainty(lcd_direction,nexttime)
             
-            cost=(link_length*60)/int(link_speed*1000)
+            cost=float(link_length*60)/(link_speed*1000)
             
             traveltime=cost+traveltime
             certainty=certainty+link_certainty
