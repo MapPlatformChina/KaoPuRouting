@@ -95,7 +95,7 @@ class Route:
             new_geo = link[3]
             if new_geo == None:
                 new_geo = (float(self.GEO0[0]),float(self.GEO0[1]))
-            lcd_direction = link_match_obj.match(last_geo,new_geo)
+            lcd_direction = link_match_obj.match(last_geo,new_geo,True)
             
             link_id=link[0]
             link_length=float(link[1])
