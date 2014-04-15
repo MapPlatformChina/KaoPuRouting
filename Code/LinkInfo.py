@@ -135,7 +135,7 @@ class LinkInfo:
             while True:
                 line=f.readline()
                 if not line: 
-                    print "not find correctly at end of the file"
+                   
                     break
                 
                 line=line.strip()
@@ -161,7 +161,7 @@ class LinkInfo:
             while True:
                 line=f.readline()
                 if not line: 
-                    print "not find correctly at end of the file"
+                    
                     break
                 line=line.strip()
                 certainty.append((line))
