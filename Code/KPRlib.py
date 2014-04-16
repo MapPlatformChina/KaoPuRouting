@@ -345,6 +345,17 @@ class KaoPuTKUtl:
 		print 'num of nodes:', len(route_result.Nodes)
 		print 'num of certainty index:',len(route_result.RouteCertainty)
 		print 'num of estimated time:',len(route_result.TraveledTime)
+		
+		file_output = open('link_for_further_research.dat','a')
+		output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
+								self.to_longitude, self.to_latitude, self.date_to_predict))
+		file_output.write(output_str)
+		for data_item in route_result.NodePath:
+			lcd,direction = data_item[0].split('_')
+			output_str = ('%s\t%s\n' % (lcd,direction))
+			file_output.write(output_str)
+		file_output.close()
+			
 '''
 	
 # sample url
