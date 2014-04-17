@@ -5,6 +5,7 @@
 # This file is a lib file for Kao Pu Routing program 
 # Created in 2014
 # ######################################################################
+import math
 from Tkinter import *
 
 class KaoPuBaseChart:
@@ -22,9 +23,18 @@ class KaoPuBaseChart:
 		self.slot_height = 2
 		self.num_of_slot_x = 24 * 12	# 5 mins a slot
 		self.num_of_slot_y = 100	# max speed is set to 120
+		
+		self.value_step = 1
 	
 	def set_value_array(self, value_array):
 		self.value_array = value_array
+		if len(self.value_array) > 0:
+			max_value = max(self.value_array)
+			self.value_step = (math.ceil(max_value / 10) * 10) / 100
+			self.max_value = self.value_step * 100
+		else:
+			self.value_step = 1
+			self.max_value = 100
 	
 	def draw(self):
 		self.canvas.delete(ALL)
@@ -39,7 +49,7 @@ class KaoPuBaseChart:
 		index = 0
 		last_pos = None
 		for value in self.value_array:
-			current_pos = [pos[0]+ self.slot_width*index, pos[1] - self.slot_height * value]
+			current_pos = [pos[0]+ self.slot_width*index, pos[1] - self.slot_height * (value/self.max_value * 100)]
 			self.canvas.create_text(current_pos[0], current_pos[1], 
 										text ='*', fill = 'blue')
 			if last_pos != None:
@@ -98,7 +108,7 @@ class KaoPuBaseChart:
 		self.canvas.create_line(line_pos);		
 		for i in range(0,self.num_of_slot_y / 10+1):
 			index = i * 10
-			word = ('%d' % round(index) )
+			word = ('%d' % round(index * self.value_step) )
 			line_pos = (self.zero_pos[0] , self.zero_pos[1]- index * self.slot_height,
 						self.zero_pos[0] - 5, self.zero_pos[1] - index * self.slot_height)
 			self.canvas.create_line(line_pos);
