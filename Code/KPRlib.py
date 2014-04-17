@@ -39,7 +39,7 @@ MAP_TEXT = '地图'
 OPTION_TEXT = '选项'
 
 DATE_TEXT = '日期'
-ROUTE_BUTTON_TEXT = '预测'
+ROUTE_BUTTON_TEXT = '计算'
 
 ST_TEXT = '时间段'
 ET_TEXT = '预计行使时间'
@@ -71,7 +71,7 @@ class KaoPuTKUtl:
 		self.ci_value = 5
 		self.selected_slot = 8 * 12
 		self.is_arrival_oriented_on = False
-		self.date_to_predict = '20140705'
+		self.date_to_predict = '20140425'
 		
 		self.estimated_time_array = []
 		self.ci_array = []
@@ -341,20 +341,33 @@ class KaoPuTKUtl:
 			geo = link
 			if geo != None:
 				self.path_array.append(( float(geo[1]),float(geo[0]) ))
+		self.et_chart.set_benchmark_value(route_result.GivenTravelTime)
 		self.draw()
 		print 'num of nodes:', len(route_result.Nodes)
 		print 'num of certainty index:',len(route_result.RouteCertainty)
 		print 'num of estimated time:',len(route_result.TraveledTime)
 		
-		file_output = open('link_for_further_research.dat','a')
-		output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
-								self.to_longitude, self.to_latitude, self.date_to_predict))
-		file_output.write(output_str)
+		file_output = open('v:/Insight/link_list_for_analysis.dat','w')
+		#output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
+		#						self.to_longitude, self.to_latitude, self.date_to_predict))
+		#file_output.write(output_str)
+		year = int(self.date_to_predict[0:4])
+		month = int(self.date_to_predict[4:6])
+		day = int(self.date_to_predict[6:8])
+		date_value = datetime(year, month, day)
+		vol_index = date_value.weekday()
+		link_exist_dict = {}
+		count = 0
 		for data_item in route_result.NodePath:
 			lcd,direction = data_item[0].split('_')
-			output_str = ('%s\t%s\n' % (lcd,direction))
+			output_str = ('%s\t%s\t%d\n' % (lcd,direction,vol_index))
+			if link_exist_dict.has_key(output_str):
+				continue
 			file_output.write(output_str)
+			link_exist_dict[output_str]=True
+			count += 1
 		file_output.close()
+		print count, 'links are used in computation'
 			
 '''
 	

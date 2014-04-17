@@ -18,6 +18,7 @@ class KaoPuBaseChart:
 		self.zero_pos = (0 + self.pad + self.axis_value_pad, height - self.pad - self.axis_value_pad)
 		self.selected_slot = 50
 		self.value_array = []
+		self.benchmark_value = None
 
 		self.slot_width = 1
 		self.slot_height = 2
@@ -36,6 +37,9 @@ class KaoPuBaseChart:
 			self.value_step = 1
 			self.max_value = 100
 	
+	def set_benchmark_value(self,value):
+		self.benchmark_value = value
+	
 	def draw(self):
 		self.canvas.delete(ALL)
 		self.draw_slot_bar()
@@ -48,6 +52,14 @@ class KaoPuBaseChart:
 		pos[1] -= 1
 		index = 0
 		last_pos = None
+		
+		if self.benchmark_value != None:
+			y = self.zero_pos[1] - self.slot_height * (self.benchmark_value/self.max_value * 100)
+			from_pos = [self.zero_pos[0], y]
+			to_pos = [self.zero_pos[0] + self.slot_width * self.num_of_slot_x, y]
+			self.canvas.create_line(from_pos[0], from_pos[1], to_pos[0], to_pos[1], 
+										fill = 'Dark Slate Blue')
+
 		for value in self.value_array:
 			current_pos = [pos[0]+ self.slot_width*index, pos[1] - self.slot_height * (value/self.max_value * 100)]
 			self.canvas.create_text(current_pos[0], current_pos[1], 
@@ -69,7 +81,12 @@ class KaoPuBaseChart:
 		self.canvas.create_line(line_pos, fill = 'red');
 		if len(self.value_array) >= self.selected_slot:
 			txt = str(int(self.value_array[self.selected_slot]))
-			self.canvas.create_text(self.width / 2 , self.height / 2, text = txt, font = ('Purisa',36), fill = 'red')
+			txt = ('用时: %s' % txt)
+			self.canvas.create_text(self.width / 2 , self.height / 2, text = txt, font = ('Purisa',32), fill = 'red')
+			if self.benchmark_value != None:
+				txt = str(int(self.benchmark_value))
+				txt = ('参考: %s' % txt)
+				self.canvas.create_text(self.width / 2 , self.height / 4 * 3, text = txt, font = ('Purisa',32), fill = 'red')
 	
 	def draw_axis(self):
 		# AXIS X
