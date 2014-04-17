@@ -362,10 +362,10 @@ class KaoPuTKUtl:
 		print 'num of estimated time:',len(route_result.TraveledTime)
 		
 		# please change this flag if you want to find data behind the scene
-		analysis_flag = False
+		analysis_flag = True
 		
-		if analysis_falg:
-			file_output = open('v:/Insight/link_list_for_analysis.dat','w')
+		if analysis_flag:
+			file_output = open('link_list_for_analysis.dat','w')
 			#output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
 			#						self.to_longitude, self.to_latitude, self.date_to_predict))
 			#file_output.write(output_str)
