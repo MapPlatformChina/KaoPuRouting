@@ -81,7 +81,7 @@ class KaoPuBaseChart:
 		self.canvas.create_line(line_pos, fill = 'red');
 		if len(self.value_array) >= self.selected_slot:
 			txt = str(int(self.value_array[self.selected_slot]))
-			txt = ('用时: %s' % txt)
+			txt = ('结果: %s' % txt)
 			self.canvas.create_text(self.width / 2 , self.height / 2, text = txt, font = ('Purisa',32), fill = 'red')
 			if self.benchmark_value != None:
 				txt = str(int(self.benchmark_value))

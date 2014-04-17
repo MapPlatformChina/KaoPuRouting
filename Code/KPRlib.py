@@ -53,6 +53,8 @@ RISK_TEXT_3 = '有些风险'
 RISK_TEXT_2 = '微小风险'
 RISK_TEXT_1 = '无风险'
 
+WEEK_DAY_TEXT = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
+
 PAD_X = 2
 PAD_Y = 2
 
@@ -72,6 +74,7 @@ class KaoPuTKUtl:
 		self.selected_slot = 8 * 12
 		self.is_arrival_oriented_on = False
 		self.date_to_predict = '20140425'
+		self.vol_of_the_day = 4
 		
 		self.estimated_time_array = []
 		self.ci_array = []
@@ -141,6 +144,7 @@ class KaoPuTKUtl:
 		self.ci_result_input = Entry(self.input_frame, width = INPUT_WIDTH)
 
 		self.is_arrival_oriented_cb = Checkbutton(self.input_frame, text=CB_ARRIVAL_TEXT, variable=self.is_arrival_oriented_on)
+		self.week_day_input = Entry(self.input_frame, width = INPUT_WIDTH)
 		
 		self.route_button = Button(self.input_frame, text=ROUTE_BUTTON_TEXT, width=INPUT_WIDTH)
 
@@ -206,7 +210,8 @@ class KaoPuTKUtl:
 
 		self.option_label.grid(row = 5, column = 0)
 		self.is_arrival_oriented_cb.grid(row = 5, column = 1)
-
+		self.week_day_input.grid(row = 5, column = 2)
+		
 		self.option_label.grid(row = 6, column = 0)
 		self.estimated_time_label.grid(row = 6, column = 1)
 		self.ci_result_label.grid(row = 6, column = 2)
@@ -250,6 +255,8 @@ class KaoPuTKUtl:
 		self.center_input_lon.insert(0,str(self.center_longitude))
 		self.date_input.delete(0,END)
 		self.date_input.insert(0,self.date_to_predict)
+		self.week_day_input.delete(0,END)
+		self.week_day_input.insert(0,WEEK_DAY_TEXT[self.vol_of_the_day])
 		self.zoom_level_slider.set(self.zoom_level)
 
 	def update_value(self):
@@ -260,6 +267,14 @@ class KaoPuTKUtl:
 		self.center_latitude = float(self.center_input_lat.get())
 		self.center_longitude = float(self.center_input_lon.get())
 		self.date_to_predict = self.date_input.get()
+
+		year = int(self.date_to_predict[0:4])
+		month = int(self.date_to_predict[4:6])
+		day = int(self.date_to_predict[6:8])
+		date_value = datetime(year, month, day)
+		self.vol_of_the_day = date_value.weekday()
+		self.week_day_input.delete(0,END)
+		self.week_day_input.insert(0,WEEK_DAY_TEXT[self.vol_of_the_day])
 		
 		self.zoom_level = int(self.zoom_level_slider.get())
 		
@@ -268,7 +283,6 @@ class KaoPuTKUtl:
 
 	def handler_value_update(self,event):
 		self.update_value()
-		
 		self.update_map()
 		self.draw()
 		
@@ -347,27 +361,31 @@ class KaoPuTKUtl:
 		print 'num of certainty index:',len(route_result.RouteCertainty)
 		print 'num of estimated time:',len(route_result.TraveledTime)
 		
-		file_output = open('v:/Insight/link_list_for_analysis.dat','w')
-		#output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
-		#						self.to_longitude, self.to_latitude, self.date_to_predict))
-		#file_output.write(output_str)
-		year = int(self.date_to_predict[0:4])
-		month = int(self.date_to_predict[4:6])
-		day = int(self.date_to_predict[6:8])
-		date_value = datetime(year, month, day)
-		vol_index = date_value.weekday()
-		link_exist_dict = {}
-		count = 0
-		for data_item in route_result.NodePath:
-			lcd,direction = data_item[0].split('_')
-			output_str = ('%s\t%s\t%d\n' % (lcd,direction,vol_index))
-			if link_exist_dict.has_key(output_str):
-				continue
-			file_output.write(output_str)
-			link_exist_dict[output_str]=True
-			count += 1
-		file_output.close()
-		print count, 'links are used in computation'
+		# please change this flag if you want to find data behind the scene
+		analysis_flag = False
+		
+		if analysis_falg:
+			file_output = open('v:/Insight/link_list_for_analysis.dat','w')
+			#output_str = ('Predict [%f %f] - [%f %f] of %s\n==================================\n' % (self.from_longitude, self.from_latitude, 
+			#						self.to_longitude, self.to_latitude, self.date_to_predict))
+			#file_output.write(output_str)
+			year = int(self.date_to_predict[0:4])
+			month = int(self.date_to_predict[4:6])
+			day = int(self.date_to_predict[6:8])
+			date_value = datetime(year, month, day)
+			vol_index = date_value.weekday()
+			link_exist_dict = {}
+			count = 0
+			for data_item in route_result.NodePath:
+				lcd,direction = data_item[0].split('_')
+				output_str = ('%s\t%s\t%d\n' % (lcd,direction,vol_index))
+				if link_exist_dict.has_key(output_str):
+					continue
+				file_output.write(output_str)
+				link_exist_dict[output_str]=True
+				count += 1
+			file_output.close()
+			print count, 'links are used in computation'
 			
 '''
 	
