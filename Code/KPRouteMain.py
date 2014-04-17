@@ -61,8 +61,8 @@ class KPRouteMain:
                     links.append((link_id,link_length,link_instruction))
                 
                 #only one leg
-            
-            routes.append((shape,links))
+            travel_time=one_route['summary']['travelTime']
+            routes.append((shape,links,travel_time))
             
             Tool.debugStaticMessage(self.Debug,"\nShape is:\n "+ str(shape))
             
