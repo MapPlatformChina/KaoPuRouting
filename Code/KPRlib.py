@@ -291,6 +291,8 @@ class KaoPuTKUtl:
 		#	self.center_coords = ((self.from_longitude + self.to_longitude) / 2, (self.from_latitude + self.to_latitude) / 2)
 		self.basemap.set_zoom_level(self.zoom_level)
 		self.basemap.set_center([self.center_longitude, self.center_latitude])
+		self.basemap.hot_spots[0][1] = [self.from_longitude, self.from_latitude]
+		self.basemap.hot_spots[1][1] = [self.to_longitude, self.to_latitude]
 
 	def handler_b1_down(self,event):
 		self.basemap.handler_button1_down(event)
