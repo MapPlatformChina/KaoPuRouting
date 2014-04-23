@@ -462,31 +462,40 @@ def sample_generate_link_list():
 			for link in seg.links:
 				direction_msg = parse_direction(link,road.TCD, road.STCD)
 				shift = get_shift(link, shift_factor)
+				outputstr = ('%s;%d;%s;%s;%f;%f;%f;%f\n' %  
+									(link.point_b.LCD, link.direction, link.point_a.link_name,
+									direction_msg,
+									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
+									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
+									) )
+				'''
 				outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
 									(road.LCD, link.point_a.link_name,
 									link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
 									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
 									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
 									link.point_a.seg_lcd, link.point_b.seg_lcd) )
-
-				outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
-									(road.LCD, link.point_a.link_name,
-									link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
-									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
-									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
-									link.point_a.seg_lcd, link.point_b.seg_lcd) )
+				'''
 				#print outputstr
 				file_handle.write(outputstr)
 				count += 1
 		for link in road.links:
 			direction_msg = parse_direction(link,road.TCD, road.STCD)
 			shift = get_shift(link, shift_factor)
+			outputstr = ('%s;%d;%s;%s;%f;%f;%f;%f\n' %  
+									(link.point_b.LCD, link.direction, link.point_a.link_name,
+									direction_msg,
+									link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
+									link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
+									) )
+			'''
 			outputstr = ('%s;%s;%s;%s;%d;%s;%f;%f;%f;%f;%s;%s\n' %  
 							(road.LCD, link.point_a.link_name,
 							link.point_a.LCD, link.point_b.LCD, link.direction, direction_msg,
 							link.point_a.longitude+shift[0], link.point_a.latitude+shift[1],
 							link.point_b.longitude+shift[0], link.point_b.latitude+shift[1],
 							link.point_a.seg_lcd, link.point_b.seg_lcd) )
+			'''
 			#print outputstr
 			file_handle.write(outputstr)
 			count += 1
@@ -500,8 +509,8 @@ def sample_generate_link_list():
 def main():
 
 	# Here, your unit test code or main program
-	sample_func_generate_link_dictionanry()
-	# sample_generate_link_list()
+	#sample_func_generate_link_dictionanry()
+	sample_generate_link_list()
 	
 if __name__=='__main__':
 	main()
