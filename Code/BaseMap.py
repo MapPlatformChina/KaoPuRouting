@@ -127,6 +127,10 @@ class BaseMap:
 		# draw hot spots
 		for spot in self.hot_spots:
 			self.draw_hot_spot(canvas, spot[0], spot[2], spot[3])
+		
+		#self.image_obj = Image.new('RGBA', (400, 700), (0,125,200,75))
+		#self.photo_obj = ImageTk.PhotoImage(self.image_obj)
+		#canvas.create_image(1200,400, image= self.photo_obj)
 
 	def draw_hot_spot(self, canvas, pos, r, txt):
 		the_circle = canvas.create_oval([pos[0]-r,pos[1]-r,pos[0]+r,pos[1]+r],fill='blue')

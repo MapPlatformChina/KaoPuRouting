@@ -13,7 +13,8 @@ from KPRouteMain import *
 from KaoPuBaseChart import *
 
 WINDOWS_SIZE = (1024,768)
-MAP_AREA_SIZE = (670,740)
+#MAP_AREA_SIZE = (670,740)
+MAP_AREA_SIZE = (1400,800)
 PLANNING_AREA_SIZE = (340,760)
 ZOOM_AREA_SIZE = (40,180)
 INPUT_AREA_SIZE = (280,160)
@@ -115,7 +116,9 @@ class KaoPuTKUtl:
 		# add controls into frames
 		self.map_canvas = Canvas(self.map_frame, width = MAP_AREA_SIZE[0], height = MAP_AREA_SIZE[1])
 		self.et_canvas = Canvas(self.et_frame, width = ESTIMATED_TIME_DIAGRAM_SIZE[0], height = ESTIMATED_TIME_DIAGRAM_SIZE[1])
+		#self.et_canvas = Canvas(self.map_canvas, width = ESTIMATED_TIME_DIAGRAM_SIZE[0], height = ESTIMATED_TIME_DIAGRAM_SIZE[1])
 		self.ci_canvas = Canvas(self.ci_frame, width = KAOPU_DIAGRAM_SIZE[0], height = KAOPU_DIAGRAM_SIZE[1])
+		#self.ci_canvas = Canvas(self.map_canvas, width = KAOPU_DIAGRAM_SIZE[0], height = KAOPU_DIAGRAM_SIZE[1])
 
 		self.zoom_level_slider = Scale(self.zoom_frame, from_ = 3, to = 20, orient = VERTICAL, length = ZOOM_AREA_SIZE[1] - 10, sliderlength=15, width = 20, resolution = 1)
 		
