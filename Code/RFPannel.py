@@ -8,7 +8,6 @@
 from PIL import Image, ImageTk, ImageFont, ImageDraw
 from Tkinter import *
 from BaseMap import *
-from BaseChart import *
 
 PANEL_WIDTH = 350
 PANEL_HEIGHT = 850
@@ -59,7 +58,7 @@ POS_SLIDER_TIME = [LEFT_POS_2, 140 + LINE_INTERVAL * 5.5 + 200 + 20 + 20 ]
 
 # Below is the area for class definition
 # Route Forecast Slider
-class RouteForecastSlider:
+class RFPannel:
 	def __init__(self, width, height):
 		self.width = width
 		self.height = height
@@ -74,11 +73,11 @@ class RouteForecastSlider:
 		self.date_text_color = '#ffff88'
 		self.body_text_color = '#ffff88'
 
-		self.set_data()
-		
 		self.line_width = 5
 		self.slider_length = 288
 		self.slider_line_color = '#ffff88'
+		
+		self.draw_pannel()
 		
 	def set_data(self):
 		self.date = '2014-06-20'
@@ -89,11 +88,11 @@ class RouteForecastSlider:
 		self.certainty = '80%'
 		self.zoom_level = '12'
 		
-	def get_pannel_photo(self):
-		self.draw_pannel()
-		return ImageTk.PhotoImage(self.pannel_image_obj)
+	def get_static_photo(self):
+		self.static_photo = ImageTk.PhotoImage(self.pannel_image_obj)
+		return self.static_photo
 	
-	def get_output_photo(self):
+	def get_dynamic_photo(self):
 		self.output_image_obj = Image.new('RGBA', (self.width, self.height))
 		draw_obj = ImageDraw.Draw(self.output_image_obj)
 		draw_obj.text(POS_OUTPUT_APPOINTMENT_TIME, self.time, fill = self.body_text_color, font = self.body_text_font)
@@ -104,7 +103,8 @@ class RouteForecastSlider:
 		draw_obj.text(POS_OUTPUT_ZOOM_LEVEL, self.zoom_level, fill = self.body_text_color, font = self.body_text_font)
 		
 		draw_obj.text(POS_DATE, self.date, fill = self.title_text_color, font = self.title_text_font)
-		return ImageTk.PhotoImage(self.output_image_obj)
+		self.dynamic_photo = ImageTk.PhotoImage(self.output_image_obj)
+		return self.dynamic_photo
 	
 	def draw_pannel(self):
 		self.draw_obj = ImageDraw.Draw(self.pannel_image_obj)
@@ -158,28 +158,15 @@ def main():
 	basemap_instance = BaseMap((1600,PANEL_HEIGHT + 50))
 	basemap_instance.draw(map_canvas)
 	
-	slider_obj = RouteForecastSlider(PANEL_WIDTH,PANEL_HEIGHT)
 	
-	photo_1 = slider_obj.get_pannel_photo()
+	pannel_obj = RFPannel(PANEL_WIDTH,PANEL_HEIGHT)
+	
+	photo_1 = pannel_obj.get_static_photo()
 	map_canvas.create_image(1400,(PANEL_HEIGHT + 50)/2, image= photo_1)
-	photo_2 = slider_obj.get_output_photo()
+	pannel_obj.set_data()
+	photo_2 = pannel_obj.get_dynamic_photo()
 	map_canvas.create_image(1400,(PANEL_HEIGHT + 50)/2, image= photo_2)
-	
-	basechart_obj_a = BaseChart(350,250,False)
-	basechart_obj_b = BaseChart(350,250,True)
 
-	value_array = []
-	for i in range(0,288):
-		value_array.append(i)
-	basechart_obj_a.set_value_array(value_array)
-	basechart_obj_b.set_value_array(value_array)
-	
-	photo_a = basechart_obj_a.get_static_photo()
-	photo_b = basechart_obj_b.get_static_photo()
-
-	map_canvas.create_image(1400,450, image= photo_a)
-	map_canvas.create_image(1400,690, image= photo_b)
-	
 	root_widget.mainloop()
 
 
