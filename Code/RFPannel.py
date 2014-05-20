@@ -79,7 +79,7 @@ class RFPannel:
 		
 		self.draw_pannel()
 		
-	def set_data(self):
+	#def set_data(self):
 		self.date = '2014-06-20'
 		self.time = '16:00'
 		self.start_geo = '116.21734,46.83424'

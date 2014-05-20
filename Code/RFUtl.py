@@ -16,6 +16,13 @@ from RFPannel import *
 MAP_AREA_SIZE = (1600,900)
 WINDOWS_SIZE = (1600,900)
 
+# macro from pannel
+PANNEL_HEIGHT = 850
+LEFT_POS_2 = 30
+
+# pos of button
+POS_BUTTON = [LEFT_POS_2 + 260, 80]
+
 PROGRAM_TITLE = '行程规划V1.0'
 MAP_AREA_TITLE = '地图'
 
@@ -68,7 +75,14 @@ class RFUtl:
 		self.ci_array = []
 		self.path_array = []
 		
-
+		self.set_pannel_data()
+		
+		button_file_1 = '../res/button_1.png'
+		self.button_image_1 = Image.open(button_file_1)
+		button_file_2 = '../res/button_2.png'
+		self.button_image_2 = Image.open(button_file_2)
+		self.button_photo_1 = ImageTk.PhotoImage(self.button_image_1)
+		self.button_photo_2 = ImageTk.PhotoImage(self.button_image_2)
 		
 		# route computation obj
 		self.route_obj = KPRouteMain()
@@ -88,14 +102,16 @@ class RFUtl:
 
 		self.map_frame.pack()
 		self.map_canvas.pack()
-
+		
+		self.map_canvas.bind("<Button-1>", self.handler_b1_down)
+		self.map_canvas.bind("<B1-Motion>", self.handler_b1_move)
+		self.map_canvas.bind("<ButtonRelease-1>", self.handler_b1_release)
 		
 	def draw(self):
 		self.map_canvas.delete(ALL)
 		self.basemap.draw(self.map_canvas, self.path_array)
 		
 		self.map_canvas.create_image(1400,450, image = self.pannel_obj.get_static_photo())
-		self.pannel_obj.set_data()
 		self.map_canvas.create_image(1400,450, image = self.pannel_obj.get_dynamic_photo())
 		
 		value_array = []
@@ -108,30 +124,47 @@ class RFUtl:
 		self.map_canvas.create_image(1400,690, image = self.ci_chart.get_static_photo())
 		self.map_canvas.create_image(1400,450, image = self.tta_chart.get_dynamic_photo())
 		self.map_canvas.create_image(1400,690, image = self.ci_chart.get_dynamic_photo())
-'''
+		
+		b_photo = self.button_photo_1
+		self.map_canvas.create_image(1505 ,125, image = b_photo)
+		#+ POS_BUTTON[0]		 - PANNEL_HEIGHT / 2 + POS_BUTTON[1]
+	
+	def handler_b1_down(self,event):
+		self.basemap.handler_button1_down(event)
+		self.set_value()
+
+	def handler_b1_move(self,event):
+		self.basemap.handler_button1_move(event)
+		self.set_value()
+		self.draw()
+		
+	def handler_b1_release(self,event):
+		self.basemap.handler_button1_released(event)
+		self.set_value()
+		self.draw()
+
 	def set_value(self):
 		self.from_longitude, self.from_latitude = self.basemap.hot_spots[0][1]
 		self.to_longitude, self.to_latitude = self.basemap.hot_spots[1][1]
 		self.center_longitude,self.center_latitude = self.basemap.center_coords
-		
-		self.from_input_lat.delete(0,END)
-		self.from_input_lat.insert(0,str(self.from_latitude))
-		self.from_input_lon.delete(0,END)
-		self.from_input_lon.insert(0,str(self.from_longitude))
-		self.to_input_lat.delete(0,END)
-		self.to_input_lat.insert(0,str(self.to_latitude))
-		self.to_input_lon.delete(0,END)
-		self.to_input_lon.insert(0,str(self.to_longitude))
-		self.center_input_lat.delete(0,END)
-		self.center_input_lat.insert(0,str(self.center_latitude))
-		self.center_input_lon.delete(0,END)
-		self.center_input_lon.insert(0,str(self.center_longitude))
-		self.date_input.delete(0,END)
-		self.date_input.insert(0,self.date_to_predict)
-		self.week_day_input.delete(0,END)
-		self.week_day_input.insert(0,WEEK_DAY_TEXT[self.vol_of_the_day])
-		self.zoom_level_slider.set(self.zoom_level)
+		self.set_pannel_data()
+	
+	def set_pannel_data(self):
+		self.pannel_obj.start_geo = ('%.5f,%.5f' % (self.from_longitude,self.from_latitude))
+		self.pannel_obj.end_geo = ('%.5f,%.5f' % (self.to_longitude,self.to_latitude))
+		self.pannel_obj.date = '2014-06-20'
+		self.pannel_obj.time = '16:00'
+		self.pannel_obj.go_time = '13:00'
+		self.pannel_obj.certainty = '80%'
+		self.pannel_obj.zoom_level = '12'
 
+	def draw_button(self):
+		button_file_1 = '../res/button_1.png'
+		self.button_image_1 = Image.open(button_file_1)
+		button_file_2 = '../res/button_1.png'
+		self.button_image_2 = Image.open(button_file_2)
+		
+'''
 	def update_value(self):
 		self.from_latitude = float(self.from_input_lat.get())
 		self.from_longitude = float(self.from_input_lon.get())
