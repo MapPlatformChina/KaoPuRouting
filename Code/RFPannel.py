@@ -33,6 +33,7 @@ LINE_INTERVAL = 30
 
 POS_TITLE = [LEFT_POS_0, 20]
 POS_DATE = [LEFT_POS_2, 80]
+
 POS_SLIDER = [0,0]
 POS_APPOINTMENT_TIME = [LEFT_POS_1, 140]
 POS_APPOINTMENT_PLACE = [LEFT_POS_1, 140 + LINE_INTERVAL]
@@ -79,6 +80,7 @@ class RFPannel:
 		
 		self.draw_pannel()
 		
+	
 	#def set_data(self):
 		self.date = '2014-06-20'
 		self.time = '16:00'
@@ -95,14 +97,17 @@ class RFPannel:
 	def get_dynamic_photo(self):
 		self.output_image_obj = Image.new('RGBA', (self.width, self.height))
 		draw_obj = ImageDraw.Draw(self.output_image_obj)
+		
 		draw_obj.text(POS_OUTPUT_APPOINTMENT_TIME, self.time, fill = self.body_text_color, font = self.body_text_font)
 		draw_obj.text(POS_OUTPUT_APPOINTMENT_PLACE, self.end_geo, fill = self.body_text_color, font = self.body_text_font)
 		draw_obj.text(POS_OUTPUT_FROM, self.start_geo, fill = self.body_text_color, font = self.body_text_font)
 		draw_obj.text(POS_OUTPUT_SUGGESTED_START_TIME, self.go_time, fill = self.body_text_color, font = self.date_text_font)
 		draw_obj.text(POS_OUTPUT_TTA_CERTAINTY, self.certainty, fill = self.body_text_color, font = self.date_text_font)
+
 		draw_obj.text(POS_OUTPUT_ZOOM_LEVEL, self.zoom_level, fill = self.body_text_color, font = self.body_text_font)
-		
+
 		draw_obj.text(POS_DATE, self.date, fill = self.title_text_color, font = self.title_text_font)
+
 		self.dynamic_photo = ImageTk.PhotoImage(self.output_image_obj)
 		return self.dynamic_photo
 	

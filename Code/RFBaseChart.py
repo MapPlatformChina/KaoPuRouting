@@ -12,7 +12,7 @@ from PIL import Image, ImageFont, ImageTk, ImageDraw
 BASECHART_LINE_COLOR = '#000000'
 BASECHART_TEXT_COLOR = '#000000'
 BASECHART_SPOT_COLOR = '#FF0000'
-BASECHART_FIGURE_COLOR = '#0000FF'
+BASECHART_FIGURE_COLOR = '#FFFFFF'
 
 BASECHART_LINE_WIDTH = 1
 BASECHART_FIGURE_WIDTH = 1
@@ -32,6 +32,7 @@ class RFBaseChart:
 		
 		self.font_size = 14
 		self.text_font = ImageFont.truetype('simfang.ttf',self.font_size)
+		self.pot_font = ImageFont.truetype('simhei.ttf',24)
 		
 		# data of value
 		self.value_array = []
@@ -55,8 +56,26 @@ class RFBaseChart:
 		self.num_of_slot_x = 24 * 12	# 5 mins a slot
 		self.num_of_slot_y = 100	# max speed is set to 120		
 		self.value_step = 1
-		
+
+		self.dynamic_photo = None
 		self.draw_basechart()
+
+	def get_pot_photo(self, index):
+		self.pot_image_obj = Image.new('RGBA', (self.width, self.height))
+		draw_obj = ImageDraw.Draw(self.pot_image_obj)
+		if len(self.value_array) > index:
+			value = self.value_array[index]
+			pos_x = self.zero_pos[0] + index * self.slot_width
+			pos_y = self.zero_pos[1] - value / self.max_value * 100 * self.slot_height * self.y_factor
+			current_pos = [pos_x,pos_y]
+			pos = [current_pos[0]-3,current_pos[1]-3, current_pos[0]+3, current_pos[1]+3]
+			draw_obj.ellipse(pos, fill = 'green')
+			y_shift = 3
+			if self.y_factor < 0:
+				y_shift = -27
+			draw_obj.text((current_pos[0]+3,current_pos[1]+y_shift),('%d' % value), fill = '#ffffff', font = self.pot_font)
+		self.pot_photo = ImageTk.PhotoImage(self.pot_image_obj)
+		return self.pot_photo
 	
 	def set_data(self, value_array):
 		self.value_array = value_array
