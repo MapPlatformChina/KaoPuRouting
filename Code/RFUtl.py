@@ -14,17 +14,23 @@ from RFBaseChart import *
 from RFPannel import *
 import datetime
 
-MAP_AREA_SIZE = (1600,900)
-WINDOWS_SIZE = (1600,900)
+MAP_AREA_SIZE = (1600,800)
+WINDOWS_SIZE = (1600,830)
+POS_PANNEL_DIS = (1400,400)
 
-POS_SLIDER_CONTROL_DATE = [1400 - PANEL_WIDTH/2 + LEFT_POS_2, 25 + 125]
-POS_SLIDER_CONTROL_TIME = [1400 - PANEL_WIDTH/2  + LEFT_POS_2 + 5, 25 + 140 + LINE_INTERVAL * 5.5 + 200 + 20 + 20]
-POS_SLIDER_CONTROL_ZOOM_LEVEL = [1400 - PANEL_WIDTH/2  + LEFT_POS_2, 25 + PANEL_HEIGHT - 25]
+POS_SLIDER_DATE = [LEFT_POS_2, 105]
+POS_SLIDER_TIME = [LEFT_POS_2, 120 + LINE_INTERVAL * 5.5 + 200 + 20 + 13]
+POS_SLIDER_ZOOM_LEVEL = [LEFT_POS_2, PANEL_HEIGHT - 15 ]
+
+Y_DIS_SHIFT = (MAP_AREA_SIZE[1] - PANEL_HEIGHT)/2
+POS_SLIDER_CONTROL_DATE = [POS_PANNEL_DIS[0] - PANEL_WIDTH/2 + POS_SLIDER_DATE[0], Y_DIS_SHIFT + POS_SLIDER_DATE[1]]
+POS_SLIDER_CONTROL_TIME = [POS_PANNEL_DIS[0] - PANEL_WIDTH/2  + POS_SLIDER_TIME[0] + 5, Y_DIS_SHIFT + POS_SLIDER_TIME[1]]
+POS_SLIDER_CONTROL_ZOOM_LEVEL = [POS_PANNEL_DIS[0] - PANEL_WIDTH/2  + POS_SLIDER_ZOOM_LEVEL[0], Y_DIS_SHIFT + POS_SLIDER_ZOOM_LEVEL[1]]
 
 # pos of button
-POS_BUTTON = [1505 ,125]
+POS_BUTTON = [POS_PANNEL_DIS[0]+105 ,Y_DIS_SHIFT+80]
 
-PROGRAM_TITLE = '行程规划V1.0'
+PROGRAM_TITLE = '出行管家 V1.0'
 MAP_AREA_TITLE = '地图'
 
 WEEK_DAY_TEXT = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']
@@ -45,6 +51,7 @@ class RFUtl:
 
 		# map view para
 		self.zoom_level = 12
+		self.zero_level = 6
 		
 		# spot geo
 		self.from_latitude = 39.9515592744
@@ -91,7 +98,7 @@ class RFUtl:
 		self.sliders = []
 		self.add_slider(POS_SLIDER_CONTROL_DATE, 288)
 		self.add_slider(POS_SLIDER_CONTROL_TIME, 288)
-		zoom_value = 288 / 18 * (self.zoom_level -2) + 5
+		zoom_value =int(288.0 / 18 * (self.zoom_level - self.zero_level) + 288.0/18/2)
 		self.add_slider(POS_SLIDER_CONTROL_ZOOM_LEVEL, 288,zoom_value)
 
 		
@@ -126,15 +133,15 @@ class RFUtl:
 		self.map_canvas.delete(ALL)
 		self.basemap.draw(self.map_canvas, self.path_array)
 		
-		self.map_canvas.create_image(1400,450, image = self.pannel_obj.get_static_photo())
-		self.map_canvas.create_image(1400,450, image = self.pannel_obj.get_dynamic_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1], image = self.pannel_obj.get_static_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1], image = self.pannel_obj.get_dynamic_photo())
 		
-		self.map_canvas.create_image(1400,450, image = self.tta_chart.get_static_photo())
-		self.map_canvas.create_image(1400,690, image = self.ci_chart.get_static_photo())
-		self.map_canvas.create_image(1400,450, image = self.tta_chart.get_dynamic_photo())
-		self.map_canvas.create_image(1400,690, image = self.ci_chart.get_dynamic_photo())
-		self.map_canvas.create_image(1400,450, image = self.tta_chart.get_pot_photo(self.selected_time_slot))
-		self.map_canvas.create_image(1400,690, image = self.ci_chart.get_pot_photo(self.selected_time_slot))
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1] , image = self.tta_chart.get_static_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1] + 240, image = self.ci_chart.get_static_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1]  , image = self.tta_chart.get_dynamic_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1] + 240, image = self.ci_chart.get_dynamic_photo())
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1] , image = self.tta_chart.get_pot_photo(self.selected_time_slot))
+		self.map_canvas.create_image(POS_PANNEL_DIS[0],POS_PANNEL_DIS[1] + 240, image = self.ci_chart.get_pot_photo(self.selected_time_slot))
 		
 		if self.button_pressed:
 			b_photo = self.button_photo_2
@@ -214,6 +221,10 @@ class RFUtl:
 				flag = True
 				if event.x >= slider[0][0] and event.x < slider[0][0] + slider[1]:
 					slider[2] = event.x - slider[0][0]
+				elif event.x < slider[0][0]:
+					slider[2] = 0
+				elif event.x >= slider[0][0] + slider[1]:
+					slider[2] = slider[1] - 1
 		if not flag:
 			self.basemap.handler_button1_move(event)
 
@@ -242,7 +253,7 @@ class RFUtl:
 		self.from_longitude, self.from_latitude = self.basemap.hot_spots[0][1]
 		self.to_longitude, self.to_latitude = self.basemap.hot_spots[1][1]
 		self.center_longitude,self.center_latitude = self.basemap.center_coords
-		self.zoom_level = int(self.sliders[2][2] / 1.0 / self.sliders[2][1] * 17) + 2
+		self.zoom_level = math.ceil(self.sliders[2][2] / 1.0 / self.sliders[2][1] * (20-self.zero_level)) + self.zero_level
 
 		self.selected_time_slot = self.sliders[1][2]
 		self.time = datetime.datetime(2014,4,28,0,0,0) + datetime.timedelta(minutes = self.selected_time_slot * 5)
