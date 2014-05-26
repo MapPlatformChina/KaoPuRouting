@@ -13,14 +13,15 @@ class AdRoute(RouteOneDay):
     ArrivalTime='201404091408'
     StartTime='201404091408'
     
-    def __init__(self, route,geo0,geo1, planned_time, arrival_time):
+    def __init__(self, route,geo0,geo1, planned_time, arrived_time):
         
         RouteOneDay.__init__(self, route,geo0,geo1,planned_time)
-        self.ArrivalTime=arrival_time
+        self.ArrivalTime=arrived_time
         
             
     
-    def calByArrivalTime(self, arrival_time):
+    def calByArrivalTime(self):
+        arrived_time=self.ArrivalTime
         traveltime=0
         certainty=0.00
         linkNo=0
@@ -28,11 +29,11 @@ class AdRoute(RouteOneDay):
         index=len(self.NodePath) -1
         
         while index >=0:
-            node=NodePath[index]
+            node=self.NodePath[index]
             
             lcd_direction=node[0]
             link_length=node[1]
-            nexttime=Tool.getPreTime(arrival_time, int(traveltime))
+            nexttime=Tool.getPreTime(arrived_time, int(traveltime+1))
             
             link_speed=self.getLinkSpeed(lcd_direction,nexttime)
             link_certainty=self.getLinkCertainty(lcd_direction,nexttime)
@@ -50,6 +51,8 @@ class AdRoute(RouteOneDay):
         self.TraveledTime.append(math.ceil(traveltime))
         certainty=float(certainty/(self.MaxCertainty*linkNo))
         self.RouteCertainty.append(round(certainty,2))
+        
+        self.StartTime=Tool.getPreTime(arrived_time, int(traveltime+1))
         
         print self.TraveledTime
         print self.RouteCertainty

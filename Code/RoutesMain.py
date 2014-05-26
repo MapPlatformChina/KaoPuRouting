@@ -12,7 +12,7 @@ class RoutesMain:
 
     #Server_Address="route.nlp.nokia.com.cn"
     Server_Address="211.151.53.78"
-    Debug=True
+    Debug=False
 
     #GEO "latitude","longitude"
     def listRoutes(self, geo1,geo2):
@@ -80,6 +80,8 @@ class RoutesMain:
             ad_route=AdRoute(route,geo0,geo1,'',arrived_time)
             ad_route.calByArrivalTime()
             routeOption.append(ad_route)
+            
+            print ad_route.StartTime
         
             
         return routeOption
@@ -94,7 +96,7 @@ class RoutesMain:
         start_geoY="116.41934259"
         end_geoX="39.9992530"
         end_geoY="116.4744977"
-        planned_time="201404090000"
+        planned_time="201406090900"
         
         self.getRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_time)
     
@@ -121,28 +123,13 @@ class RoutesMain:
 
 def main():
 
-    '''
-    args_size=len(sys.argv)
-    if args_size != 6:
-        usage()
-        sys.exit()
-        
-    start_geoX=sys.argv[1]
-    start_geoY=sys.argv[2]
-    end_geoX=sys.argv[3]
-    end_geoY=sys.argv[4]
-    planned_time=sys.argv[5]
-    
-    req = urllib2.Request(request_string)
-    response = urllib2.urlopen(req)
-    image_data = response.read()
-        
-    '''
+
     my_route=RoutesMain()
     
-    #my_route.testGetRoutes()
+    my_route.testGetRoutes()
     
-    my_route.testListRoutes()
+    #my_route.testListRoutes()
+    
     #211.151.53.78/routing/7.2/calculateroute.json?/routing/7.2/calculateroute.json?routeattributes=wp,sm,lg&maneuverattributes=ac,po,tt,le,li&linkattributes=sh&legattributes=sh&jsonAttributes=41&verboseMode=5&metricSystem=metric&alternatives=3&waypoint0=geo!39.9515592744,116.41934259&waypoint1=geo!39.9992530,116.4744977&language=zh_CN&mode=fastest;car;traffic:disabled;&app_id=90oGXsXHT8IRMSt5D79X&token=JY0BReev8ax1gIrHZZoqIg
 
 
