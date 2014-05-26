@@ -63,6 +63,19 @@ class Tool:
         
         nexttime_str=date2.strftime('%Y%m%d%H%M')        
         return nexttime_str
+    
+    @staticmethod
+    def getPreTime(time_str, mins):
+        #
+        #time_str yyyymmddHHMM
+        date=datetime.strptime(time_str,'%Y%m%d%H%M')
+
+        mins=int(mins)
+        span=timedelta(minutes=mins)
+        date2= date-span
+        
+        pretime_str=date2.strftime('%Y%m%d%H%M')        
+        return pretime_str
         
     @staticmethod
     def refineString(str):
