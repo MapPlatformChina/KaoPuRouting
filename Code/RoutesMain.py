@@ -7,6 +7,8 @@ from AdRoute import *
 from Tool import *
 import urllib 
 import urllib2
+from RouteSession import *
+from RouteControl import *
 
 class RoutesMain:
 
@@ -91,8 +93,6 @@ class RoutesMain:
             ad_route=AdRoute(route,geo0,geo1,'',arrived_time)
             ad_route.calByArrivalTime()
             routeOption.append(ad_route)
-            
-            print ad_route.StartTime
 
         return routeOption
     
@@ -114,7 +114,7 @@ class RoutesMain:
         
         planned_time="201406090900"
         
-        self.getRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_time)
+        return self.getRoutes([start_geoX,start_geoY],[end_geoX,end_geoY],planned_time)
     
 
     def testListRoutes(self):
@@ -129,8 +129,7 @@ class RoutesMain:
         end_geoX="39.90383"
         end_geoY="116.39496"
         
-        routes=self.listRoutes([start_geoX,start_geoY],[end_geoX,end_geoY])
-        
+        routes=self.listRoutes([start_geoX,start_geoY],[end_geoX,end_geoY], self.DefaultMode, 3)
         Tool.results2Log(str(routes[0]))
         
         
@@ -142,8 +141,10 @@ def main():
 
     my_route=RoutesMain()
     
-    my_route.testGetRoutes()
-    
+    route=my_route.testGetRoutes()[0]
+    ss=RouteSession(route)
+    ctl=RouteControl()
+    ctl.reportPos([39.9100792, 116.6572952],ss)
     #my_route.testListRoutes()
     
     #211.151.53.78/routing/7.2/calculateroute.json?/routing/7.2/calculateroute.json?routeattributes=wp,sm,lg&maneuverattributes=ac,po,tt,le,li&linkattributes=sh&legattributes=sh&jsonAttributes=41&verboseMode=5&metricSystem=metric&alternatives=3&waypoint0=geo!39.91005,116.65712&waypoint1=geo!39.90383,116.39496&language=zh_CN&mode=fastest;car;traffic:disabled;&app_id=90oGXsXHT8IRMSt5D79X&token=JY0BReev8ax1gIrHZZoqIg

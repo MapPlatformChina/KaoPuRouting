@@ -49,10 +49,7 @@ class RouteOneDay:
         self.initRouteSections(route[0])
         self.LinksInstruction=route[1]
         self.GivenTravelTime=int(route[2])/60
-        
-        print self.GivenTravelTime
-        print '--------------Initiate New Route --------------------'
-        
+                
     def initRouteSections(self,shape):
         
         sections=shape

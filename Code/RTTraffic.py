@@ -6,16 +6,18 @@ class RTTraffic:
 
     TrafficData={}
     IncidentData=[]
-    def __init__(self):   
-        self.load_traffic('../Traffic/Beijing/Flow/FlowData.csv')
-        self.load_incident('../Traffic/Beijing/Incident/IncidentData.csv')
+    def __init__(self):  
         TrafficData={}
         IncidentData=[]
+        self.load_traffic('../Traffic/Beijing/Flow/FlowData.csv')
+        self.load_incident('../Traffic/Beijing/Incident/IncidentData.csv')
+        
         
     def load_traffic(self, traffic_file_name):
         
         indexes = ('primary_location', 'direction', 'event_code','speed_limit_advice')
         self.TrafficData=self.getData(traffic_file_name,indexes, True)
+        print 'loading realtime traffic ...'
         
     def load_incident(self, traffic_file_name):
         indexes = ('primary_location', 'direction','event_code', 'latitude', 'longitude')

@@ -10,10 +10,11 @@ from RTTraffic import *
 class RouteControl:
 
     RealTraffic=''
-    
+    Debug=True
     def reportPos(self, pos, routeSession):
 
-        RealTraffic=RTTraffic()
+        self.RealTraffic=RTTraffic()
+         
         adRoute=routeSession.RouteObj
         geoList=routeSession.PassedPos
         passedIndex=routeSession.PassedIndex
@@ -23,16 +24,17 @@ class RouteControl:
         if index<0:
             #not found current position in the route path
             #either need to recalculate or need to trigger new event to collect new position
+            print 'not found nearest path'
             return -1
             
         routeSession.setPassedIndex(index)
-        routeSession.appendPos(pos)
+        routeSession.PassedPos.append(pos)
         
         found=self.checkSpeedAfterIndex(adRoute,index,10, 45, 50,10)
         
         if found>0:
             #found incident
-            print 'find speed is not normal or incident'
+            print 'find speed is not normal or incident at path ', found
             return found
         
         return 0
@@ -61,10 +63,10 @@ class RouteControl:
             if traveltime>from_mins and traveltime < to_mins:
                 real_speed=self.getLinkRealSpeed(lcd_direction,nexttime)
                 #detected incident and need to report
-                print lcd_direction, real_speed, link_speed
+                if self.Debug:
+                    print lcd_direction, real_speed, link_speed, link_length, traveltime
                 if real_speed < link_speed and real_speed < mini_speed and link_length > mini_len: 
                     found=index
-                    print '@@@@@@@@@@@@@@@@@@@@@@', traveltime
                     break
             elif traveltime > to_mins:
                 break

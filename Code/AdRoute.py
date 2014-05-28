@@ -51,8 +51,8 @@ class AdRoute(RouteOneDay):
         
         self.StartTime=Tool.getPreTime(arrived_time, int(traveltime+1))
         
-        print self.TraveledTime
-        print self.RouteCertainty
+        #print self.TraveledTime
+        #print self.RouteCertainty
     
         
     def testcalByArrivalTime(self):
