@@ -10,7 +10,7 @@ from RTTraffic import *
 class RouteControl:
 
     RealTraffic=''
-    Debug=False
+    Debug=True
     def reportPos(self, pos, routeSession):
 
         self.RealTraffic=RTTraffic()
@@ -30,7 +30,7 @@ class RouteControl:
         routeSession.setPassedIndex(index)
         routeSession.PassedPos.append(pos)
         
-        found=self.checkSpeedAfterIndex(adRoute,index,10, 45, 50,10)
+        found=self.checkSpeedAfterIndex(adRoute,index,10, 45, 20,10)
         
         if found>0:
             #found incident
@@ -65,7 +65,7 @@ class RouteControl:
                 #detected incident and need to report
                 if self.Debug:
                     print lcd_direction, real_speed, link_speed, link_length, traveltime
-                if real_speed < link_speed and real_speed < mini_speed and link_length > mini_len: 
+                if real_speed < link_speed and real_speed < float(mini_speed) and link_length > mini_len: 
                     print 'founded ', lcd_direction, real_speed, link_speed, link_length, traveltime
                     found=index
                     break
