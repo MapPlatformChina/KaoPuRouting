@@ -10,7 +10,7 @@ from RTTraffic import *
 class RouteControl:
 
     RealTraffic=''
-    Debug=True
+    Debug=False
     def reportPos(self, pos, routeSession):
 
         self.RealTraffic=RTTraffic()
@@ -66,6 +66,7 @@ class RouteControl:
                 if self.Debug:
                     print lcd_direction, real_speed, link_speed, link_length, traveltime
                 if real_speed < link_speed and real_speed < mini_speed and link_length > mini_len: 
+                    print 'founded ', lcd_direction, real_speed, link_speed, link_length, traveltime
                     found=index
                     break
             elif traveltime > to_mins:
