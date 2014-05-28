@@ -141,7 +141,7 @@ def main():
 
     my_route=RoutesMain()
     
-    route=my_route.testGetRoutes()[0]
+    route=my_route.testGetRoutes()[1]
     ss=RouteSession(route)
     ctl=RouteControl()
     ctl.reportPos([39.9100792, 116.6572952],ss)
