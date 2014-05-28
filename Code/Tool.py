@@ -65,6 +65,13 @@ class Tool:
         return nexttime_str
     
     @staticmethod
+    def getNow():
+        date=datetime.now()
+        now=date.strftime('%Y%m%d%H%M')  
+        
+        return now
+    
+    @staticmethod
     def getPreTime(time_str, mins):
         #
         #time_str yyyymmddHHMM
@@ -94,15 +101,48 @@ class Tool:
 
         c = math.sin(lat_a) * math.sin(lat_b) * math.cos(lon_a - lon_b) + math.cos(lat_a) * math.cos(lat_b)
         distance = 1000*6371.004 * math.acos(c)*math.pi/180
-
+        #unit is meter
         return distance
         
+    @staticmethod    
+    def middlepoint(coords_a, coords_b):
+        
+        lat1=float(coords_a[0])
+        lon1=float(coords_a[1])
+        lat2=float(coords_b[0])
+        lon2=float(coords_b[1])
+        
+        dLon = math.radians(lon2 - lon1)
+
+        #convert to radians
+        lat1 = math.radians(lat1)
+        lat2 = math.radians(lat2)
+        lon1 = math.radians(lon1)
+
+        Bx = math.cos(lat2) * math.cos(dLon)
+        By = math.cos(lat2) * math.sin(dLon)
+        lat3 = math.atan2(math.sin(lat1) + math.sin(lat2), math.sqrt((math.cos(lat1) + Bx) * (math.cos(lat1) + Bx) + By * By))
+        lon3 = lon1 + math.atan2(By, math.cos(lat1) + Bx)
+        
+        return [math.degrees(lat3),math.degrees(lon3)]
+    
+    @staticmethod 
+    def middlepointS(coords_a, coords_b):
+        lat1=float(coords_a[0])
+        lon1=float(coords_a[1])
+        lat2=float(coords_b[0])
+        lon2=float(coords_b[1])
+        
+        lat3=(lat1+lat2)/2
+        lon3= (lon1+lon2)/2
+        
+        return [lat3,lon3]
+    
 def main():
     
-    time_str=Tool.getNextTime('201404092304', 1)
-    print time_str
-    print Tool.getDayofWeek(time_str)
-    print Tool.getTimeIndex(time_str)
+    geo=Tool.middlepoint(['39.1','116.1'],['39.3','116.3'])
+    geo1=Tool.middlepointS(['39.1','116.1'],['39.3','116.3'])
+    print Tool.getNow()
     
 if __name__=='__main__':
     main()

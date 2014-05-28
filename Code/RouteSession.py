@@ -9,8 +9,8 @@ from AdRoute import *
 class RouteSession:
 
     PassedIndex=0
-    RouteObj=null
-    List PassedPos=[]
+    RouteObj=''
+    PassedPos=[]
     
     def __init__(self, route): 
         self.RouteObj=route

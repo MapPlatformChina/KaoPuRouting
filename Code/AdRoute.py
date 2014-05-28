@@ -3,7 +3,7 @@
 from Tool import *
 from RouteOneDay import *
 import math
-  
+ 
 
 class AdRoute(RouteOneDay):
 
@@ -53,6 +53,7 @@ class AdRoute(RouteOneDay):
         
         print self.TraveledTime
         print self.RouteCertainty
+    
         
     def testcalByArrivalTime(self):
         self.calByArrivalTime(self.ArrivalTime)
