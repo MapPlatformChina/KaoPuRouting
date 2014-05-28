@@ -10,7 +10,7 @@ class RTTraffic:
         TrafficData={}
         IncidentData=[]
         self.load_traffic('../Traffic/Beijing/Flow/FlowData.csv')
-        self.load_incident('../Traffic/Beijing/Incident/IncidentData.csv')
+        #self.load_incident('../Traffic/Beijing/Incident/IncidentData.csv')
         
         
     def load_traffic(self, traffic_file_name):

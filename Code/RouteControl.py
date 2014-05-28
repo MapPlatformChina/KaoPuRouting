@@ -10,7 +10,7 @@ from RTTraffic import *
 class RouteControl:
 
     RealTraffic=''
-    Debug=True
+    Debug=False
     def reportPos(self, pos, routeSession):
 
         self.RealTraffic=RTTraffic()
@@ -89,7 +89,7 @@ class RouteControl:
             geo_start=node[2]
             geo_next=node[3]
             
-            geo_middle=Tool.middlepointS(geo_start,geo_next)
+            geo_middle=Tool.middlepoint(geo_start,geo_next)
             pos2ceter_len=Tool.coords_to_distance(geo,geo_middle)
             
             path_len= path_len/2+10
