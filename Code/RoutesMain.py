@@ -26,7 +26,7 @@ class RoutesMain:
         route_mode=mode
         uri ="/routing/7.2/calculateroute.json?routeattributes=wp,sm,lg&maneuverattributes=ac,po,tt,le,li&linkattributes=sh&legattributes=sh&jsonAttributes=41&verboseMode=5&metricSystem=metric&alternatives="
         uri =uri + alternatives + "&waypoint0=geo!"+geo1[0]+","+geo1[1]+"&waypoint1=geo!"+geo2[0]+","+geo2[1]+"&language=zh_CN&mode="
-        uri =uri + route_mode + "&app_id=90oGXsXHT8IRMSt5D79X&token=JY0BReev8ax1gIrHZZoqIg"
+        uri =uri + route_mode + "&app_code=5FcMtCOSxk5bQ-iikmqEWw&app_id=_alznH-RjhZ2TRrIhLA9&h=20"
 
         Tool.debugStaticMessage(self.Debug,"/routing/7.2/calculateroute.json?"+uri)
         
