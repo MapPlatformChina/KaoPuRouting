@@ -142,7 +142,9 @@ def main():
     
     geo=Tool.middlepoint(['39.1','116.1'],['39.3','116.3'])
     geo1=Tool.middlepointS(['39.1','116.1'],['39.3','116.3'])
+    
     print Tool.getNow()
+    print Tool.coords_to_distance([36.117,116.876],[36.1171,116.876])
     
 if __name__=='__main__':
     main()

@@ -10,7 +10,7 @@ import urllib2
 
 class KPRouteMain:
 
-    #Server_Address="route.nlp.nokia.com.cn"
+    #Server_Address="route.api.here.com"
     Server_Address="211.151.53.78"
     Debug=False
 

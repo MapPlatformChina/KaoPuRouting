@@ -147,7 +147,7 @@ def main():
     ctl.reportPos([39.9100792, 116.6572952],ss)
     #my_route.testListRoutes()
     
-    #211.151.53.78/routing/7.2/calculateroute.json?/routing/7.2/calculateroute.json?routeattributes=wp,sm,lg&maneuverattributes=ac,po,tt,le,li&linkattributes=sh&legattributes=sh&jsonAttributes=41&verboseMode=5&metricSystem=metric&alternatives=3&waypoint0=geo!39.91005,116.65712&waypoint1=geo!39.90383,116.39496&language=zh_CN&mode=fastest;car;traffic:disabled;&app_id=90oGXsXHT8IRMSt5D79X&token=JY0BReev8ax1gIrHZZoqIg
+    #211.151.53.78/routing/7.2/calculateroute.json?/routing/7.2/calculateroute.json?routeattributes=wp,sm,lg&maneuverattributes=ac,po,tt,le,li&linkattributes=sh&legattributes=sh&jsonAttributes=41&verboseMode=5&metricSystem=metric&alternatives=3&waypoint0=geo!39.91005,116.65712&waypoint1=geo!39.90383,116.39496&language=zh_CN&mode=fastest;car;traffic:disabled;&app_code=5FcMtCOSxk5bQ-iikmqEWw&app_id=_alznH-RjhZ2TRrIhLA9&h=20
 
 
 if __name__=='__main__':
