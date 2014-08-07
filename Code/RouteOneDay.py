@@ -87,7 +87,7 @@ class RouteOneDay:
             lcd_direction =str(lcd_direction[0])+'_'+str(lcd_direction[1])
             
             link_length=math.ceil(Tool.coords_to_distance(geo_start,geo_next))
-            self.NodePath.append((lcd_direction, int(link_length)))
+            self.NodePath.append((lcd_direction, int(link_length), geo_start,geo_next))
             
             certainty7days=self.RouteLinkInfo.Load7DaysLinkCertainty(lcd_direction)
             self.CertaintyWeek.update({lcd_direction:certainty7days})
