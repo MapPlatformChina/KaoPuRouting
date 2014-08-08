@@ -114,7 +114,6 @@ class RouteOneDay:
         
     def getLinkSpeed(self, lcd_direction, time_str):     
         speed_24=self.SpeedWeek.get(lcd_direction)
-
         if speed_24 == None or not speed_24 :
             return self.getDefaultSpeed(time_str)
         else:
@@ -124,6 +123,8 @@ class RouteOneDay:
             time_index=int(Tool.getTimeIndex(time_str))
             line=line[day_index]
             pos=line.split(' ')
+            if float(pos[time_index]) == 0: # by steve
+                return self.getDefaultSpeed(time_str) # by steve
             return float(pos[time_index])
 
     
